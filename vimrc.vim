@@ -35,8 +35,6 @@ colorscheme vividchalk
 set cursorline
 set number
 
-let st_no_folding = 1
-
 let vimrc='$HOME/.vimrc'
 
 " Backup file related settings
@@ -53,7 +51,6 @@ if has("gui")
    set columns=80
 endif
 
-"let maplocalleader=','
 let mapleader=" "
 
 let g:rails_menu = 2 " Show Rails menu at top level
@@ -172,9 +169,6 @@ map <C-h> <C-w><Left>
 noremap <M-j> <C-e>
 noremap <M-k> <C-y>
 
-nmap <C-e> :Explore<cr>
-nmap <C-S-e> :Sexplore<cr>
-
 " In insert mode, C-o and C-b open lines below and above
 imap <C-o> <end><cr>
 imap <C-b> <home><cr><Up>
@@ -191,6 +185,7 @@ nnoremap <silent> <Leader>y :YRShow<cr>
 
 " edit vimrc
 nnoremap <silent> <F5> :e <C-R>=vimrc<cr><cr>
+
 " reload vimrc
 nnoremap <silent> <F6> :source <C-R>=vimrc<cr><cr>
 
@@ -204,42 +199,6 @@ inoremap <C-f> <C-x><C-f>
 " macro completion
 inoremap <C-d> <C-x><C-d>
 
-" a map to delete a word up to the next underscore or capital letter:
-map ,w d/[_A-Z]<ESC>
-map ,W c/[_A-Z]<ESC>
-
 runtime filetypes.vim
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Substitutions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-iab cant can't
-iab Cant Can't
-iab dont don't
-iab Dont Don't
-iab wont won't
-iab Wont Won't
-iab alos      also
-iab aslo      also
-iab becuase   because
-iab bianry    binary
-iab bianries  binaries
-iab charcter  character
-iab charcters characters
-iab exmaple   example
-iab exmaples  examples
-iab shoudl    should
-iab seperate  separate
-iab teh       the
-iab tpyo      typo
-iab optino    option
-iab udpate    update
-iab typdef typedef
-iab flase false
-iab /} //}}}
-iab /{ //{{{
-
-" Some geeky numbers
-iab Npi 3.1415926535897932384626433832795028841972
-iab Ne  2.7182818284590452353602874713526624977573
+runtime subs.vim
 
