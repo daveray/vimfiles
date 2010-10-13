@@ -25,6 +25,12 @@
 
 set nocompatible
 
+if has("win32") || has("win64")
+    let vimfiles="$HOME/vimfiles"
+else
+    let vimfiles="$HOME/.vim"
+endif
+
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 
@@ -51,6 +57,7 @@ if has("gui")
    set lines=65
    set columns=90
 endif
+
 
 let mapleader=" "
 let maplocalleader=" "
@@ -194,6 +201,21 @@ inoremap <C-f> <C-x><C-f>
 
 " macro completion
 inoremap <C-d> <C-x><C-d>
+
+" screen.vim bindings
+" Open screen session...
+nmap <silent> <Leader>so :ScreenShell<cr>
+nmap <silent> <Leader>sj :ScreenShell java -jar <C-R>=vimfiles<cr>/lib/rhino-js-1.7R2.jar
+nmap <silent> <Leader>sr :ScreenShell jirb<cr>
+nmap <silent> <Leader>sR :ScreenShell irb<cr>
+nmap <silent> <Leader>sp :ScreenShell python<cr>
+nmap <silent> <Leader>sc :ScreenShell clojure<cr>
+
+" Close session
+nmap <silent> <Leader>sq :ScreenQuit<cr>
+
+nmap <silent> <Leader>ss :ScreenSend<cr>
+vmap <silent> <Leader>ss :ScreenSend<cr>
 
 runtime filetypes.vim
 runtime subs.vim
