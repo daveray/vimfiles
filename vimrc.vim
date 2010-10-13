@@ -49,7 +49,7 @@ if has("gui")
    set guioptions=agmrtTb
    set winaltkeys=no          "alt doesn't do window menus
    set lines=65
-   set columns=80
+   set columns=90
 endif
 
 let mapleader=" "
