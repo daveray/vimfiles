@@ -20,22 +20,23 @@
 " yiw          Yank current word
 " yfX          Yank from current position to first instance of X
 " daw          Delete word under cursor
+"
+" To log vim stuff: $vim -V9log.txt ...
 
 set nocompatible
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 
+filetype off " On some Linux systems, this is necessary to make sure pathogen
+             " picks up ftdetect directories in plugins! :(
 syntax on
-filetype plugin on
 filetype plugin indent on
 
 "colorscheme desert
 colorscheme vividchalk
 set cursorline
 set number
-
-let vimrc='$HOME/.vimrc'
 
 " Backup file related settings
 set backup
@@ -52,6 +53,7 @@ if has("gui")
 endif
 
 let mapleader=" "
+let maplocalleader=" "
 
 let g:rails_menu = 2 " Show Rails menu at top level
 
@@ -182,12 +184,6 @@ nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 
 " Map shift-Y to show yankring
 nnoremap <silent> <Leader>y :YRShow<cr>
-
-" edit vimrc
-nnoremap <silent> <F5> :e <C-R>=vimrc<cr><cr>
-
-" reload vimrc
-nnoremap <silent> <F6> :source <C-R>=vimrc<cr><cr>
 
 " Switch to alternate file
 map <C-Tab> :bnext<cr>

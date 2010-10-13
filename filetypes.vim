@@ -15,34 +15,15 @@ autocmd FileType html,xml   call FT_html()
 autocmd FileType tcl   call FT_tcl()
 autocmd FileType ruby   call FT_ruby()
 autocmd FileType python   call FT_python()
+
 " common settings for any source code editing
 function! FT_allcode()
    set nowrap
 endfunction
 
-" map ,h i<c-r>=toupper(substitute(expand("%"), "\\.", "_", ""))
-
 " common c/c++ settings
 function! FT_ccpp()
    set formatoptions=coql cindent comments=sr:/*,mb:*,el:*/,://
-
-   " Comment out a block
-   vmap C <esc>`<O/*<esc>`>o*/<esc>
-   vmap T <esc>`<dd`>dd
-
-   " declare #ifndef header idiom
-   map ,h <ESC>0i#ifndef _H<cr>#define _H<cr>#endif<esc>kkkwi
-
-   " declare main
-   map ,m <ESC>oint main(int argc, char *argv[])<cr>{<cr>return 0;<cr>}<ESC>%o
-
-   if has("win32")
-      " Insert a new UUID at the cursor
-      map <M-u> <ESC>:r !uuidgen<cr>^i<BS><ESC>$
-      imap <M-u> <ESC>:r !uuidgen<cr>^i<BS><ESC>$a
-   elseif has("unix")
-   endif
-
 endfunction
 
 function! FT_txt()
@@ -78,10 +59,6 @@ endfunction
 function! FT_java()
    set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
 
-   " declare main
-   " map <C-m> <ESC>opublic static void main(String[] args) {<cr>}<ESC>%o
-   map ,m <ESC>opublic static void main(String[] args) {<cr>}<ESC>%o
-
    call FT_allcode()
 endfunction
 
@@ -100,13 +77,6 @@ endfunction
 
 " HTML language settings
 function! FT_html()
-   "Start tag
-   imap <C-t> <><ESC>i
-   "End a tag
-   imap <C-g> </><ESC>i
-   "Skip to end of tag
-   "imap <C-l> <end>
-
    " expand "keywords" for URL prefixes ( >= 5.7 )
    se isk+=:,/,~
    call FT_allcode()
