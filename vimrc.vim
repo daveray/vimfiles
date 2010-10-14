@@ -4,7 +4,7 @@
 " http://vim.wikia.com/wiki/Best_Vim_Tips
 " I            Insert at start of line
 " A            Insert at end of line
-" * or #       Search for word under cursor
+" * or #       Search for word under cursor (forward/back)
 " :sp <file>   Split and open file (i in Nerdtree)
 " H, M, L      Jump to top/middle/bottom of window
 " g; or g,     Jump to last/next change position (:changes)
@@ -26,10 +26,11 @@
 set nocompatible
 
 if has("win32") || has("win64")
-    let vimfiles="$HOME/vimfiles"
+    let vimfiles=$HOME . "/vimfiles"
 else
-    let vimfiles="$HOME/.vim"
+    let vimfiles=$HOME . "/.vim"
 endif
+let libdir=vimfiles . "/lib"
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
@@ -58,10 +59,10 @@ if has("gui")
    set columns=90
 endif
 
-
 let mapleader=" "
 let maplocalleader=" "
 
+" Settings for rails.vim
 let g:rails_menu = 2 " Show Rails menu at top level
 
 " Settings for VimClojure
@@ -96,6 +97,7 @@ set formatoptions=tcoq2l
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
+" Hit k and then j for escape
 inoremap kj <Esc>
 
 " keep selection when changing indention level
@@ -186,33 +188,35 @@ imap <C-b> <home><cr><Up>
 imap <M-Space> <esc>la
 imap <C-Space> <esc>lwi
 
-" Toggle nerd tree
-nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
-
-" Map shift-Y to show yankring
-nnoremap <silent> <Leader>y :YRShow<cr>
-
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
 
 " file name completion
 inoremap <C-f> <C-x><C-f>
-
+" line completion
+inoremap <C-l> <C-x><C-l>
 " macro completion
 inoremap <C-d> <C-x><C-d>
 
+" Toggle nerd tree
+nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
+
+" Map <Leader>y to show yankring
+nnoremap <silent> <Leader>y :YRShow<cr>
+
+" <Leader>f to search recursively for the word under the curson
+map <Leader>f :execute "noautocmd vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
-" Open screen session...
 nmap <silent> <Leader>so :ScreenShell<cr>
-nmap <silent> <Leader>sj :ScreenShell java -jar <C-R>=vimfiles<cr>/lib/rhino-js-1.7R2.jar
+nmap <silent> <Leader>sq :ScreenQuit<cr>
+nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" .  libdir . "/*\" org.mozilla.javascript.tools.shell.Main" <cr>
 nmap <silent> <Leader>sr :ScreenShell jirb<cr>
 nmap <silent> <Leader>sR :ScreenShell irb<cr>
 nmap <silent> <Leader>sp :ScreenShell python<cr>
 nmap <silent> <Leader>sc :ScreenShell clojure<cr>
-
-" Close session
-nmap <silent> <Leader>sq :ScreenQuit<cr>
 
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
