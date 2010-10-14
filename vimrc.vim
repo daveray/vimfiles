@@ -21,7 +21,7 @@
 " yfX          Yank from current position to first instance of X
 " daw          Delete word under cursor
 "
-" To log vim stuff: $vim -V9log.txt ...
+" To log vim stuff: $ vim -V9log.txt ...
 
 set nocompatible
 
@@ -135,10 +135,11 @@ set shortmess=atoOTA " This formats the responses at the bottom so that
 set visualbell
 set noerrorbells     " stupid bells
 
-" These are the file extensions to ignore when mathing filenames.
+" These are the file extensions to ignore when matching filenames.
 set suffixes=.bak,.exe
 set suffixes+=.o,.obj,.swp,~,.ncb,.opt,.plg,.aps,.pch,.pdb,.clw
 set suffixes+=.class
+set suffixes+=.pyc
 
 set tags=./tags,./TAGS,tags,TAGS,../tags,../TAGS,.../tags,.../TAGS
 
@@ -163,6 +164,11 @@ cab E e
 " Key Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Clipboard copy/paste
+vmap <Leader>c "+y
+map <Leader>v "+gP
+imap <Leader>v <Esc>"+gP
+
 " Move by screen lines rather than actual lines
 map j gj
 map k gk
@@ -182,17 +188,15 @@ map <C-j> <C-w><Down>
 map <C-l> <C-w><Right>
 map <C-h> <C-w><Left>
 
-" Map alt-cursor keys to scrolling window a line at a time
-noremap <M-j> <C-e>
-noremap <M-k> <C-y>
+" Window resizing
+map <silent> <A-h> <C-w><
+map <silent> <A-j> <C-W>-
+map <silent> <A-k> <C-W>+
+map <silent> <A-l> <C-w>>
 
 " In insert mode, C-o and C-b open lines below and above
 imap <C-o> <end><cr>
 imap <C-b> <home><cr><Up>
-
-" Alt-space skips next character in insert mode
-imap <M-Space> <esc>la
-imap <C-Space> <esc>lwi
 
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
@@ -215,6 +219,14 @@ nnoremap <silent> <Leader>y :YRShow<cr>
 map <Leader>f :execute "noautocmd vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" scratch.vim bindings
+
+" <Leader>b opens the scratch buffer. In visual mode, copy and paste to the
+" end of the scratch buffer
+map <Leader>b :Sscratch<CR>
+vmap <Leader>b y:Sscratch<CR>Gp
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
 nmap <silent> <Leader>so :ScreenShell<cr>
 nmap <silent> <Leader>sq :ScreenQuit<cr>
@@ -227,6 +239,7 @@ nmap <silent> <Leader>sc :ScreenShell clojure<cr>
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
 
+" Load other files
 runtime filetypes.vim
 runtime subs.vim
 
