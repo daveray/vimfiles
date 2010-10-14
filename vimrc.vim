@@ -167,7 +167,6 @@ cab E e
 " Clipboard copy/paste
 vmap <Leader>c "+y
 map <Leader>v "+gP
-imap <Leader>v <Esc>"+gP
 
 " Move by screen lines rather than actual lines
 map j gj
@@ -231,10 +230,10 @@ vmap <Leader>b y:Sscratch<CR>Gp
 nmap <silent> <Leader>so :ScreenShell<cr>
 nmap <silent> <Leader>sq :ScreenQuit<cr>
 nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" .  libdir . "/*\" org.mozilla.javascript.tools.shell.Main" <cr>
+nmap <silent> <Leader>sc :execute "ScreenShell java -cp \"" .  libdir . "/*\" clojure.main" <cr>
 nmap <silent> <Leader>sr :ScreenShell jirb<cr>
 nmap <silent> <Leader>sR :ScreenShell irb<cr>
 nmap <silent> <Leader>sp :ScreenShell python<cr>
-nmap <silent> <Leader>sc :ScreenShell clojure<cr>
 
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
