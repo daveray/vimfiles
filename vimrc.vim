@@ -97,6 +97,9 @@ set formatoptions=tcoq2l
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
+" Typing :q and :w is too much work
+nmap <Leader>q :q<cr>
+nmap <Leader>w :w<cr>
 " Hit k and then j for escape
 inoremap kj <Esc>
 
@@ -117,7 +120,10 @@ set showcmd
 set showmode         " shows what mode you are in.  Useful for block cmds.
 set ruler            " This shows the current position at lower left.
 set laststatus=2
+
 set statusline=%F%m%r%h\ %y\ \ %=%(%l\/%L%)\ %c
+set statusline+=\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}
+
 set cmdheight=2
 set wildmenu
 set wildchar=<TAB>
