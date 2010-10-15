@@ -25,12 +25,25 @@
 
 set nocompatible
 
+" Let's remember some things, like where the .vim folder is.
 if has("win32") || has("win64")
     let vimfiles=$HOME . "/vimfiles"
+    let sep=";"
 else
     let vimfiles=$HOME . "/.vim"
+    let sep=":"
 endif
-let libdir=vimfiles . "/lib"
+
+" Build a reasonable classpath for most Maven or Leiningen projects
+" This is used by the Clojure and Rhino screen repls below
+let classpath = "."
+for part in ["src", "src/main/clojure", "src/main/resources", 
+           \ "test", "src/test/clojure", "src/test/resources",
+           \ "classes", "target/classes",
+           \ "lib*", "lib/dev/*", 
+           \ vimfiles."/lib/*"]
+    let classpath .= sep . part
+endfor
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
@@ -229,8 +242,8 @@ vmap <Leader>b y:Sscratch<CR>Gp
 " screen.vim bindings
 nmap <silent> <Leader>so :ScreenShell<cr>
 nmap <silent> <Leader>sq :ScreenQuit<cr>
-nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" .  libdir . "/*\" org.mozilla.javascript.tools.shell.Main" <cr>
-nmap <silent> <Leader>sc :execute "ScreenShell java -cp \"" .  libdir . "/*\" clojure.main" <cr>
+nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" . classpath . "\" org.mozilla.javascript.tools.shell.Main" <cr>
+nmap <silent> <Leader>sc :execute "ScreenShell java -cp \"" . classpath . "\" clojure.main" <cr>
 nmap <silent> <Leader>sr :ScreenShell jirb<cr>
 nmap <silent> <Leader>sR :ScreenShell irb<cr>
 nmap <silent> <Leader>sp :ScreenShell python<cr>
