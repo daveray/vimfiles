@@ -251,6 +251,11 @@ nmap <silent> <Leader>sp :ScreenShell python<cr>
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fuzzy finder bindings
+nmap <silent> <Leader>Z :FufBuffer<cr>
+nmap <silent> <Leader>z :FufCoverageFile<cr>
+
 " Load other files
 runtime filetypes.vim
 runtime subs.vim
