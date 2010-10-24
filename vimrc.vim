@@ -34,16 +34,20 @@ else
     let sep=":"
 endif
 
-" Build a reasonable classpath for most Maven or Leiningen projects
-" This is used by the Clojure and Rhino screen repls below
-let classpath = "."
-for part in ["src", "src/main/clojure", "src/main/resources", 
-           \ "test", "src/test/clojure", "src/test/resources",
-           \ "classes", "target/classes",
-           \ "lib*", "lib/dev/*", 
-           \ vimfiles."/lib/*"]
-    let classpath .= sep . part
-endfor
+" Build a reasonable classpath for most Maven, Leiningen, or whatever projects
+" This is used by the Clojure and Rhino repls below. Note that lib/* is last
+" so it can be overridden by project-local versions. Assumes working directory
+" is the project root because that's the right way to use vim :)
+let classpath = join(
+   \[".", 
+   \ "src", "src/main/clojure", "src/main/resources", 
+   \ "test", "src/test/clojure", "src/test/resources",
+   \ "classes", "target/classes",
+   \ "lib/*", "lib/dev/*", 
+   \ "bin", 
+   \ vimfiles."/lib/*"
+   \], 
+   \ sep)
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
@@ -73,15 +77,10 @@ if has("gui")
 endif
 
 let mapleader=" "
-let maplocalleader=" "
+let maplocalleader=","
 
 " Settings for rails.vim
 let g:rails_menu = 2 " Show Rails menu at top level
-
-" Settings for VimClojure
-let vimclojure#HighlightBuiltins=1
-let vimclojure#HighlightContrib=1
-let vimclojure#ParenRainbow=1
 
 " Search related settings
 set magic            " activates the pattern matching characters.
@@ -240,21 +239,42 @@ vmap <Leader>b y:Sscratch<CR>Gp
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
+" Start a vanillar shell
 nmap <silent> <Leader>so :ScreenShell<cr>
+" Quit the screen session
 nmap <silent> <Leader>sq :ScreenQuit<cr>
+" Start a Rhino JavaScript repl
 nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" . classpath . "\" org.mozilla.javascript.tools.shell.Main" <cr>
-nmap <silent> <Leader>sc :execute "ScreenShell java -cp \"" . classpath . "\" clojure.main" <cr>
+" Start a Ruby repl
 nmap <silent> <Leader>sr :ScreenShell jirb<cr>
 nmap <silent> <Leader>sR :ScreenShell irb<cr>
+" Start a Python repl
 nmap <silent> <Leader>sp :ScreenShell python<cr>
-
+" Send current file for visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
+" Don't forget about clojure (<Leader>sc) below!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimclojure stuff
+" Settings for VimClojure
+let vimclojureRoot = vimfiles."/bundle/vimclojure-2.2.0"
+let vimclojure#HighlightBuiltins=1
+let vimclojure#HighlightContrib=1
+let vimclojure#DynamicHighlighting=1
+let vimclojure#ParenRainbow=1
+let vimclojure#WantNailgun = 1
+let vimclojure#NailgunClient = vimclojureRoot."/lib/nailgun/ng"
+
+" Start vimclojure nailgun server (uses screen.vim to manage lifetime)
+nmap <silent> <Leader>sc :execute "ScreenShell java -cp \"" . classpath . ":" . vimclojureRoot . "lib/*" . "\" vimclojure.nailgun.NGServer 127.0.0.1" <cr>
+" Start a generic Clojure repl (uses screen.vim)
+nmap <silent> <Leader>sC :execute "ScreenShell java -cp \"" . classpath . "\" clojure.main" <cr>
 
 " Load other files
 runtime filetypes.vim
