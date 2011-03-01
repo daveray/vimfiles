@@ -242,17 +242,17 @@ vmap <Leader>b y:Sscratch<CR>Gp
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
-" Start a vanillar shell
-nmap <silent> <Leader>so :ScreenShell<cr>
+" Start a vanilla shell
+nmap <silent> <Leader>so :execute "ScreenShell cd \"" . expand($PWD) . "\"" <cr>
 " Quit the screen session
 nmap <silent> <Leader>sq :ScreenQuit<cr>
 " Start a Rhino JavaScript repl
-nmap <silent> <Leader>sj :execute "ScreenShell java -cp \"" . classpath . "\" org.mozilla.javascript.tools.shell.Main" <cr>
+nmap <silent> <Leader>sj :execute "ScreenShell cd \"" . expand($PWD) . "\"; java -cp \"" . classpath . "\" org.mozilla.javascript.tools.shell.Main" <cr>
 " Start a Ruby repl
-nmap <silent> <Leader>sr :ScreenShell jirb<cr>
-nmap <silent> <Leader>sR :ScreenShell irb<cr>
+nmap <silent> <Leader>sr :execute "ScreenShell cd \"" . expand($PWD) . "\"; jirb" <cr>
+nmap <silent> <Leader>sR :execute "ScreenShell cd \"" . expand($PWD) . "\"; irb" <cr>
 " Start a Python repl
-nmap <silent> <Leader>sp :ScreenShell python<cr>
+nmap <silent> <Leader>sp :execute "ScreenShell cd \"" . expand($PWD) . "\"; python" <cr>
 " Send current file for visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
@@ -262,6 +262,7 @@ vmap <silent> <Leader>ss :ScreenSend<cr>
 " fuzzy finder bindings
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
+nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimclojure stuff
@@ -279,9 +280,9 @@ if windows
 endif
 
 " Start vimclojure nailgun server (uses screen.vim to manage lifetime)
-nmap <silent> <Leader>sc :execute "ScreenShell java -Xmx512M -cp \"" . classpath . sep . vimclojureRoot . "/lib/*" . "\" vimclojure.nailgun.NGServer 127.0.0.1" <cr>
+nmap <silent> <Leader>sc :execute "ScreenShell cd \"" . expand($PWD) . "\"; java -Xmx512M -cp \"" . classpath . sep . vimclojureRoot . "/lib/*" . "\" vimclojure.nailgun.NGServer 127.0.0.1" <cr>
 " Start a generic Clojure repl (uses screen.vim)
-nmap <silent> <Leader>sC :execute "ScreenShell java -Xmx512M -cp \"" . classpath . "\" clojure.main" <cr>
+nmap <silent> <Leader>sC :execute "ScreenShell cd \"" . expand($PWD) . "\"; java -Xmx512M -cp \"" . classpath . "\" clojure.main" <cr>
 
 " Load other files
 runtime filetypes.vim
