@@ -52,6 +52,8 @@ let classpath = join(
    \], 
    \ sep)
 
+let java_opts = ""
+
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 
@@ -244,6 +246,14 @@ function! Screenshell_prefix()
     return "ScreenShell cd \"" . fnamemodify(".",":p") . "\""
 endf
 
+function Screen_java(class, more_cp)
+    let cp = g:classpath
+    if !empty(a:more_cp)
+        let cp .= g:sep . join(a:more_cp, g:sep)
+    endif
+    return Screenshell_prefix() . "; java -Xmx512M " . g:java_opts . " -cp \"" . cp . "\" " . a:class
+endf
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
@@ -253,12 +263,13 @@ nmap <silent> <Leader>so :execute Screenshell_prefix() <cr>
 " Quit the screen session
 nmap <silent> <Leader>sq :ScreenQuit<cr>
 " Start a Rhino JavaScript repl
-nmap <silent> <Leader>sj :execute Screenshell_prefix() . "; java -cp \"" . classpath . "\" org.mozilla.javascript.tools.shell.Main" <cr>
+nmap <silent> <Leader>sj :execute Screen_java("org.mozilla.javascript.tools.shell.Main", []) <cr>
 " Start a Ruby repl
 nmap <silent> <Leader>sr :execute Screenshell_prefix() . "; jirb" <cr>
 nmap <silent> <Leader>sR :execute Screenshell_prefix() . "; irb" <cr>
 " Start a Python repl
 nmap <silent> <Leader>sp :execute Screenshell_prefix() . "; python" <cr>
+nmap <silent> <Leader>sP :execute Screenshell_prefix() . "; jython" <cr>
 " Send current file for visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
@@ -286,9 +297,9 @@ if windows
 endif
 
 " Start vimclojure nailgun server (uses screen.vim to manage lifetime)
-nmap <silent> <Leader>sc :execute Screenshell_prefix() . "; java -Xmx512M -cp \"" . classpath . sep . vimclojureRoot . "/lib/*" . "\" vimclojure.nailgun.NGServer 127.0.0.1" <cr>
+nmap <silent> <Leader>sc :execute Screen_java("vimclojure.nailgun.NGServer 127.0.0.1", [vimclojureRoot . "/lib/*"]) <cr>
 " Start a generic Clojure repl (uses screen.vim)
-nmap <silent> <Leader>sC :execute Screenshell_prefix() . "; java -Xmx512M -cp \"" . classpath . "\" clojure.main" <cr>
+nmap <silent> <Leader>sC :execute Screen_java("clojure.main", []) <cr>
 
 " Load other files
 runtime filetypes.vim
