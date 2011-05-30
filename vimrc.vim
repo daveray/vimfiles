@@ -275,6 +275,12 @@ nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
 " Don't forget about clojure (<Leader>sc) below!
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" git bindings
+nmap <silent> <leader>gs :Gstatus<cr>
+nmap <silent> <leader>gc :Gcommit -a<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
 nmap <silent> <Leader>Z :FufBuffer<cr>
