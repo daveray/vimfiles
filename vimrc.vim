@@ -280,6 +280,7 @@ vmap <silent> <Leader>ss :ScreenSend<cr>
 " git bindings
 nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gc :Gcommit -a<cr>
+nmap <silent> <leader>gp :Gpush<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
