@@ -119,6 +119,8 @@ nmap <Leader>q :q<cr>
 nmap <Leader>w :w<cr>
 " Hit k and then j for escape
 inoremap kj <Esc>
+" Ctrl-space for omni-complete
+inoremap <c-Space> <c-x><c-o>
 
 " keep selection when changing indention level
 vnoremap < <gv
