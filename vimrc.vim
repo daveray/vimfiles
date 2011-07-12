@@ -25,6 +25,10 @@
 
 set nocompatible
 
+" I just want paredit
+let g:slimv_loaded = 1
+let g:slimv_clojure_loaded = 1
+
 " Let's remember some things, like where the .vim folder is.
 if has("win32") || has("win64")
     let windows=1
@@ -83,6 +87,9 @@ endif
 
 let mapleader=" "
 let maplocalleader=","
+
+" Settings for slimv/paredit
+let g:paredit_leader=","
 
 " Settings for rails.vim
 let g:rails_menu = 2 " Show Rails menu at top level
