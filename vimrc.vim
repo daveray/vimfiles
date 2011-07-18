@@ -293,6 +293,7 @@ nmap <silent> <leader>gp :Git push<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
+let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp|tif|class|gif)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(3rd-party|build|substrate|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
 nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
