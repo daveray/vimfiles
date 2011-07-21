@@ -177,8 +177,8 @@ set splitbelow       " open new window below current one on split
 command -nargs=* Make make <args> | cwindow 5
 
 " Map \m to run this make command
-map <M-m> :Make<cr> 
-map <C-M-m> :Make clean<cr> 
+nmap <Leader>m :make<cr>
+nmap <Leader>M :Make<cr> 
 
 " I frequently still have the shift key down when I hit the e or w
 " after I enter ':'.  This way they still work the same way as their
@@ -282,6 +282,8 @@ nmap <silent> <Leader>sP :execute Screenshell_prefix() . "; jython" <cr>
 " Send current file for visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
+" Start a Haskell repl
+nmap <silent> <Leader>sh :execute Screenshell_prefix() . "; ghci" <cr>
 " Don't forget about clojure (<Leader>sc) below!
 
 
