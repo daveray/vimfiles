@@ -47,9 +47,6 @@ endfunction
 
 " C++ language settings
 function! FT_cpp()
-   " Alt-h forces fieltype to C.  Since .h files default to cpp.
-   map <M-h> <ESC>:set filetype=c<cr>
-
    " include common c/c++ stuff
    call FT_ccpp()
    call FT_allcode()
