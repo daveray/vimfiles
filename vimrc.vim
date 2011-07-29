@@ -113,8 +113,8 @@ set viminfo^=!
 " set smartindent
 set cindent
 set autoindent
-set shiftwidth=4
-set tabstop=4        " 3 is a nice round number
+set shiftwidth=2
+set tabstop=2
 set shiftround       " round indents to multiples of shiftwidth
 set expandtab        " replace tabs with spaces (stupid tabs)
 set formatoptions=tcoq2l 
@@ -240,8 +240,27 @@ nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 " Map <Leader>y to show yankring
 nnoremap <silent> <Leader>y :YRShow<cr>
 
-" <Leader>f to search recursively for the word under the curson
-map <Leader>f :execute "noautocmd vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimgrep bindings and stuff
+
+function Vimgrep_cmd(word, file_patterns)
+  return "noautocmd vimgrep /" . a:word . "/j " . a:file_patterns
+endf
+
+function Vimgrep_file_patterns()
+  let ext = expand("%:e")
+  if ext == "c" || ext == "h" || ext == "cpp" || ext == "cc"
+    return "**/*.h **/*.cpp **/*.c **/*.cc"
+  else
+    return "**/*." . ext
+  endif
+endf
+
+" <Leader>f* to recursively search all files for the word under the cursor
+map <silent> <Leader>f* :execute Vimgrep_cmd(expand("<cword>"), "**") <Bar> cwindow<CR>
+" <Leader>ff to recursively search all files of same type for the word under the cursor
+map <silent> <Leader>fw :execute Vimgrep_cmd(expand("<cword>"), Vimgrep_file_patterns()) <Bar> cwindow<CR>
+map <silent> <Leader>fi :execute Vimgrep_cmd(input("Enter a search pattern: ", expand("<cword>")), Vimgrep_file_patterns()) <Bar> cwindow<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " scratch.vim bindings
@@ -295,7 +314,7 @@ nmap <silent> <leader>gp :Git push<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
-let g:fuf_coveragefile_exclude = '\v\~$|\.(jar|o|exe|dll|bak|orig|swp|tif|class|gif)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(autodoc|classes|3rd-party|build|substrate|input_data|QA)($|[/\\])'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(jar|o|exe|dll|bak|orig|swp|tif|class|gif)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
 nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
