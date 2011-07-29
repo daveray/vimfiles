@@ -171,15 +171,6 @@ set tags=./tags,./TAGS,tags,TAGS,../tags,../TAGS,.../tags,.../TAGS
 
 set splitbelow       " open new window below current one on split
 
-" Command Make will call make and then cwindow which 
-" opens a 5 line error window if any errors are found. 
-" if no errors, it closes any open cwindow. 
-command -nargs=* Make make <args> | cwindow 5
-
-" Map \m to run this make command
-nmap <Leader>m :make<cr>
-nmap <Leader>M :Make<cr> 
-
 " I frequently still have the shift key down when I hit the e or w
 " after I enter ':'.  This way they still work the same way as their
 " lower case versions.
@@ -239,6 +230,24 @@ nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 
 " Map <Leader>y to show yankring
 nnoremap <silent> <Leader>y :YRShow<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Make bindings
+
+" http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make 
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty. 
+"
+" Note: Must allow nesting of autocmds to enable any customizations for quickfix
+" buffers. 
+" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
+" (but not if it's already open). However, as part of the autocmd, this doesn't
+" seem to happen. 
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Map \m to run this make command
+nmap <Leader>m :make<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimgrep bindings and stuff
