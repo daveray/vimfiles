@@ -123,6 +123,7 @@ set bs=2		         " allow backspacing over everything in insert mode
 
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
+nmap <Leader>Q :qall<cr>
 nmap <Leader>w :w<cr>
 " Hit k and then j for escape
 inoremap kj <Esc>
@@ -183,7 +184,8 @@ cab E e
 
 " Clipboard copy/paste
 vmap <Leader>c "+y
-map <Leader>v "+gP
+map <Leader>v "+gp
+map <Leader>V "+gP
 
 " Move by screen lines rather than actual lines
 map j gj
