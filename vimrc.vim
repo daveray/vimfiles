@@ -189,8 +189,8 @@ map <Leader>v "+gP
 map j gj
 map k gk
 map <S-Down> <Down>
-map <S-j> j
-map <S-k> k
+"map <S-j> j
+"map <S-k> k
 
 " In insert mode, hold down control to do movement, cursor keys suck.
 imap <C-h> <Left>
