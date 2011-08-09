@@ -16,7 +16,7 @@
 " <C-o><C-i>   Walk through jump list
 " <C-a><C-x>   Inc/Dec number under cursor
 " <C-r><C-a>   Bring word under cursor into command line
-" <C-r>%       Bring word under cursor into command line
+" <C-r>%       Bring current file name into command line
 " yiw          Yank current word
 " yfX          Yank from current position to first instance of X
 " daw          Delete word under cursor
