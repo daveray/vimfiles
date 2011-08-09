@@ -130,6 +130,12 @@ inoremap kj <Esc>
 " Ctrl-space for omni-complete
 inoremap <c-Space> <c-x><c-o>
 
+" In visual line mode, I always accidently keep the shift key down
+" which causes me to join lines (or lookup a keyword) instead of highlight 
+" them.
+vnoremap K k
+vnoremap J j
+
 " keep selection when changing indention level
 vnoremap < <gv
 vnoremap > >gv
