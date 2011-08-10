@@ -280,6 +280,23 @@ map <silent> <Leader>fw :execute Vimgrep_cmd(expand("<cword>"), Vimgrep_file_pat
 map <silent> <Leader>fi :execute Vimgrep_cmd(input("Enter a search pattern: ", expand("<cword>")), Vimgrep_file_patterns()) <Bar> cwindow<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pipe to buffer
+
+function! PipeToBuffer(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  "tabnew
+  new
+  silent put=message
+  set nomodified
+endfunction
+
+" Run an ex command and pipe the result to a new scratch buffer
+"   e.g. :Pipe !hg log
+command! -nargs=+ -complete=command Pipe call PipeToBuffer(<q-args>)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " scratch.vim bindings
 
 " <Leader>b opens the scratch buffer. In visual mode, copy and paste to the
@@ -328,6 +345,17 @@ nmap <silent> <Leader>sh :execute Screenshell_prefix() . "; ghci" <cr>
 nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gc :Gcommit -a<cr>
 nmap <silent> <leader>gp :Git push<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" hg bindings
+command -nargs=* H !hg <args>
+command -nargs=* Hstatus !hg status <args>
+command -nargs=* Hcommit !hg commit <args>
+command -nargs=* Hadd    !hg add <args>
+command -nargs=* Hpull   !hg pull <args>
+command -nargs=* Hpush   !hg push <args>
+command -nargs=* Hlog    !hg log <args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
