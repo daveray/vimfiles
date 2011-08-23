@@ -236,9 +236,6 @@ inoremap <C-d> <C-x><C-d>
 " Toggle nerd tree
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 
-" Map <Leader>y to show yankring
-nnoremap <silent> <Leader>y :YRShow<cr>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
 
