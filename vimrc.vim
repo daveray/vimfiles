@@ -221,6 +221,9 @@ map <silent> <A-j> <C-W>-
 map <silent> <A-k> <C-W>+
 map <silent> <A-l> <C-w>>
 
+" Close everything but the current window
+nmap <silent> <Leader>o :only<cr>
+
 " In insert mode, C-o and C-b open lines below and above
 imap <C-o> <end><cr>
 imap <C-b> <home><cr><Up>
@@ -343,7 +346,8 @@ nmap <silent> <Leader>sh :execute Screenshell_prefix() . "; ghci" <cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git bindings
 nmap <silent> <leader>gs :Gstatus<cr>
-nmap <silent> <leader>gc :Gcommit -a<cr>
+nmap <silent> <leader>ge :Gedit<cr>
+nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gp :Git push<cr>
 
 
