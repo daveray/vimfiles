@@ -66,6 +66,9 @@ filetype off " On some Linux systems, this is necessary to make sure pathogen
 syntax on
 filetype plugin indent on
 
+" Use option key as alt/meta on ridiculous MBP keyboard.
+set macmeta
+
 "colorscheme desert
 colorscheme vividchalk
 set cursorline
