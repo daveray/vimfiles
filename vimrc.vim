@@ -77,7 +77,9 @@ syntax on
 filetype plugin indent on
 
 " Use option key as alt/meta on ridiculous MBP keyboard.
-set macmeta
+if has("mac")
+  set macmeta
+end
 
 "colorscheme desert
 colorscheme vividchalk
@@ -100,6 +102,13 @@ endif
 
 let mapleader=" "
 let maplocalleader=","
+
+" Settings for gist.vim
+" If there's no git, don't try to load gist.vim. It handles it less gracefull
+" than I'd like.
+if !executable("git")
+  let g:loaded_gist_vim = 1
+end
 
 " Settings for slimv/paredit
 let g:paredit_leader=","
