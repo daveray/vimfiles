@@ -10,6 +10,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tips
 "
+" :Vedit vimrc.vim - Edit this file
 " http://vim.wikia.com/wiki/Best_Vim_Tips
 " I            Insert at start of line
 " A            Insert at end of line
@@ -142,9 +143,6 @@ set expandtab        " replace tabs with spaces (stupid tabs)
 set formatoptions=tcoq2l 
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
-
-" Edit vimrc.vim (requires pathogen 2.0)
-nmap <F2> :Vedit vimrc.vim<cr>
 
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
