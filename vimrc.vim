@@ -143,6 +143,9 @@ set formatoptions=tcoq2l
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
+" Edit vimrc.vim (requires pathogen 2.0)
+nmap <F2> :Vedit vimrc.vim<cr>
+
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
 nmap <Leader>Q :qall<cr>
@@ -399,7 +402,11 @@ command -nargs=* Hlog    !hg log <args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
-let g:fuf_coveragefile_exclude = '\v\~$|\.(jar|o|exe|dll|bak|orig|swp|tif|class|gif)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
+let g:fuf_coveragefile_exclude = 
+      \'\v\~$|'.
+      \'\.(jar|o|exe|dll|bak|orig|swp|tif|class|gif)$|'.
+      \'(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])|'.
+      \'(^|[/\\])(autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
 nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
