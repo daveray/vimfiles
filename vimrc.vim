@@ -404,9 +404,9 @@ command -nargs=* Hlog    !hg log <args>
 " fuzzy finder bindings
 let g:fuf_coveragefile_exclude = 
       \'\v\~$|'.
-      \'\.(jar|o|exe|dll|bak|orig|swp|tif|class|gif)$|'.
-      \'(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])|'.
-      \'(^|[/\\])(autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
+      \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
+      \'(^|[/\\])\.(hg|git|bzr|svn|CVS)($|[/\\])|'.
+      \'(^|[/\\])(images|lib|autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
 nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
