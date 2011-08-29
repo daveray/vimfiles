@@ -357,6 +357,8 @@ nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>ge :Gedit<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gp :Git push<cr>
+let g:Gitv_OpenHorizontal = 1
+nmap <silent> <leader>gv :Gitv<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
