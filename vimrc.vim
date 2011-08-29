@@ -1,4 +1,13 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Setup
+"
+" $ cat "runtime vimrc.vim" > ~/.vimrc
+" 
+" Gist:
+" $ git config --global github.user username
+" $ git config --global github.token token
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tips
 "
 " http://vim.wikia.com/wiki/Best_Vim_Tips
