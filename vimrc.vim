@@ -209,6 +209,9 @@ imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-l> <Right>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Window management
+
 " Map ctrl-cursor keys to window switching
 map <C-k> <C-w><Up>
 map <C-j> <C-w><Down>
@@ -223,6 +226,11 @@ map <silent> <A-l> <C-w>>
 
 " Close everything but the current window
 nmap <silent> <Leader>o :only<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tab management
+" Use gt and gT to move through tabs
+map <silent> <A-t> :tabnew<cr>
 
 " In insert mode, C-o and C-b open lines below and above
 imap <C-o> <end><cr>
