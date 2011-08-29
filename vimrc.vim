@@ -16,6 +16,7 @@
 " * or #       Search for word under cursor (forward/back)
 " :sp <file>   Split and open file (i in Nerdtree)
 " H, M, L      Jump to top/middle/bottom of window
+" <C-f><C-b>   PageUp/PageDown
 " g; or g,     Jump to last/next change position (:changes)
 " gi           Insert at last edited position
 " gf           Open file under cursor
@@ -229,9 +230,16 @@ map <C-h> <C-w><Left>
 
 " Window resizing
 map <silent> <A-h> <C-w><
+map <silent> <A-H> 7<C-w><
+
 map <silent> <A-j> <C-W>-
+map <silent> <A-J> 7<C-W>-
+
 map <silent> <A-k> <C-W>+
+map <silent> <A-K> 7<C-W>+
+
 map <silent> <A-l> <C-w>>
+map <silent> <A-L> 7<C-w>>
 
 " Close everything but the current window
 nmap <silent> <Leader>o :only<cr>
