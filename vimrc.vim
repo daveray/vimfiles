@@ -148,6 +148,11 @@ set bs=2		         " allow backspacing over everything in insert mode
 nmap <Leader>q :q<cr>
 nmap <Leader>Q :qall<cr>
 nmap <Leader>w :w<cr>
+
+" Semi-colon enters command window in insert mode
+nmap ; q:
+au CmdwinEnter * startinsert
+
 " Hit k and then j for escape
 inoremap kj <Esc>
 " Ctrl-space for omni-complete
@@ -403,7 +408,7 @@ command -nargs=* Hlog    !hg log <args>
 let g:fuf_coveragefile_exclude = 
       \'\v\~$|'.
       \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
-      \'(^|[/\\])\.(hg|git|bzr|svn|CVS)($|[/\\])|'.
+      \'(^|[/\\])\.(hg|git|bzr|svn|CVS|settings)($|[/\\])|'.
       \'(^|[/\\])(images|lib|autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>Z :FufBuffer<cr>
 nmap <silent> <Leader>z :FufCoverageFile<cr>
