@@ -158,6 +158,9 @@ inoremap kj <Esc>
 " Ctrl-space for omni-complete
 inoremap <c-Space> <c-x><c-o>
 
+" Space-space goes to end of file and starts editing.
+nnoremap <Leader><Space> G$a
+
 " In visual line mode, I always accidently keep the shift key down
 " which causes me to join lines (or lookup a keyword) instead of highlight 
 " them.
