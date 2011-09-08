@@ -92,15 +92,6 @@ set backup
 set backupdir=$HOME/vimbak
 set autowrite        " automatically writes when changing files.
 
-" GUI related settings
-if has("gui")
-   set mousehide
-   set guioptions=agmrb
-   set winaltkeys=no          "alt doesn't do window menus
-   set lines=65
-   set columns=90
-endif
-
 let mapleader=" "
 let maplocalleader=","
 
