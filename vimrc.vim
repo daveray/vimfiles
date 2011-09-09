@@ -63,7 +63,8 @@ let classpath = join(
    \ "classes", "target/classes",
    \ "lib/*", "lib/dev/*", 
    \ "bin", 
-   \ vimfiles."/lib/*"
+   \ vimfiles."/lib/*",
+   \ vimfiles."/lib"
    \], 
    \ sep)
 
