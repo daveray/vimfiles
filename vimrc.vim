@@ -112,7 +112,7 @@ let g:rails_menu = 2 " Show Rails menu at top level
 " Search related settings
 set magic            " activates the pattern matching characters.
 set wrapscan         " wrap back to top of file on search.
-set nohlsearch       " don't highlight search matches.
+set hlsearch         " highlight search matches.
 set incsearch        " shows incremental searches.
 set ignorecase
 set smartcase
@@ -135,6 +135,9 @@ set expandtab        " replace tabs with spaces (stupid tabs)
 set formatoptions=tcoq2l 
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
+
+" Clear search highlighting
+nmap <Leader>8 :nohlsearch<cr>
 
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
