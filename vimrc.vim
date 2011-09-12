@@ -137,7 +137,7 @@ set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
 " Clear search highlighting
-nmap <Leader>8 :nohlsearch<cr>
+nmap <silent> <Leader>8 :nohlsearch<cr>
 
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
