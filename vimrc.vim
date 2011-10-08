@@ -415,7 +415,7 @@ nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimclojure stuff
 " Settings for VimClojure
-let vimclojureRoot = vimfiles."/bundle/kotarak-vimclojure-2ac9e954b659"
+let vimclojureRoot = vimfiles."/bundle/vimclojure-2.3.0"
 let vimclojure#FuzzyIndent=1
 let vimclojure#HighlightBuiltins=1
 let vimclojure#HighlightContrib=1
