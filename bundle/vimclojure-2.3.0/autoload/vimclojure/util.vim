@@ -38,18 +38,24 @@ function! vimclojure#util#WithSavedPosition(closure)
 	return vimclojure#util#WithSaved(a:closure)
 endfunction
 
+" Fix from MB in this thread:
+" https://groups.google.com/forum/#!msg/vimclojure/rvBSBJYm6WI/L76KnEMA-dQJ
 function! vimclojure#util#WithSavedRegister(reg, closure)
-	let a:closure._register = a:reg
+    let a:closure._register = a:reg
 
-	function a:closure.save() dict
-		return [getreg(self._register, 1), getregtype(self._register)]
-	endfunction
+    function a:closure.save() dict
+        return [[self._register, getreg(self._register, 1), getregtype(self._register)],
+                    \ ["0", getreg("0", 1), getregtype("0")],
+                    \ ["", getreg("", 1), getregtype("")]]
+    endfunction
 
-	function a:closure.restore(value) dict
-		call call(function("setreg"), [self._register] + a:value)
-	endfunction
+    function a:closure.restore(value) dict
+        for register in a:value
+            call call(function("setreg"), register)
+        endfor
+    endfunction
 
-	return vimclojure#util#WithSaved(a:closure)
+    return vimclojure#util#WithSaved(a:closure)
 endfunction
 
 function! vimclojure#util#WithSavedOption(option, closure)
