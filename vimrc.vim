@@ -180,9 +180,17 @@ set showmode         " shows what mode you are in.  Useful for block cmds.
 set ruler            " This shows the current position at lower left.
 set laststatus=2
 
-set statusline=%F%m%r%h\ %y\ \ %=%(%l\/%L%)\ %c
-set statusline+=\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}
+" set statusline=%F%m%r%h\ %y\ \ %=%(%l\/%L%)\ %c
+" set statusline+=\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" statline.vim stuff
+" disable syntastic on the statusline
+let g:statline_syntastic = 0
+" enable fugitive statusline
+let g:statline_fugitive = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set cmdheight=2
 set wildmenu
 set wildchar=<TAB>
