@@ -195,6 +195,7 @@ let g:statline_syntastic = 0
 let g:statline_fugitive = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set title
 set cmdheight=2
 set wildmenu
 set wildchar=<TAB>
