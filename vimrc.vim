@@ -118,7 +118,7 @@ set ignorecase
 set smartcase
 
 " Command history settings
-set history=100
+set history=1000
 set viminfo='10,\"20,ra:,rb:
 " Remember more stuff in viminfo so rail.vim will remember projects
 set viminfo^=!
