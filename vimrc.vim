@@ -169,6 +169,10 @@ vnoremap > >gv
 vmap <tab> >gv
 vmap <s-tab> <gv
 
+" Swap ` and ' for jumping to a mark.
+nnoremap ' `
+nnoremap ` '
+
 set showmatch        " show matching brackets
 
 set scrolloff=4      " keep a buffer around the cursor by scrolling the window
