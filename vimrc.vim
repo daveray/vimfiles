@@ -78,6 +78,9 @@ filetype off " On some Linux systems, this is necessary to make sure pathogen
 syntax on
 filetype plugin indent on
 
+" Default to UTF-8
+set encoding=utf-8
+
 " Use option key as alt/meta on ridiculous MBP keyboard.
 if has("mac")
   set macmeta
