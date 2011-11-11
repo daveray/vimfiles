@@ -405,6 +405,7 @@ nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gp :Git push<cr>
 let g:Gitv_OpenHorizontal = 1
 nmap <silent> <leader>gv :Gitv<cr>
+nmap <silent> <leader>gV :Gitv --all<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
