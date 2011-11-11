@@ -449,6 +449,9 @@ nmap <silent> <Leader>sc :execute Screen_java("vimclojure.nailgun.NGServer 127.0
 " Start a generic Clojure repl (uses screen.vim)
 nmap <silent> <Leader>sC :execute Screen_java("clojure.main", []) <cr>
 
+" Add lazytest words
+autocmd FileType clojure setlocal lispwords+=describe,it,testing
+
 " Load other files
 runtime filetypes.vim
 runtime subs.vim
