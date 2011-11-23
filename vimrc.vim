@@ -219,6 +219,11 @@ set suffixes+=.pyc
 set tags=./tags,./TAGS,tags,TAGS,../tags,../TAGS,.../tags,.../TAGS
 
 set splitbelow       " open new window below current one on split
+set splitright       " open new window to right current one on split
+
+" When window is resized, resize splits. Not totally ideal, but better
+" than the alternative.
+au VimResized * exe "normal! \<c-w>="
 
 " I frequently still have the shift key down when I hit the e or w
 " after I enter ':'.  This way they still work the same way as their
