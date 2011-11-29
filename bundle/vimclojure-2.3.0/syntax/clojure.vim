@@ -234,7 +234,7 @@ syn region  clojureSet     matchgroup=clojureParen0 start="#{" matchgroup=clojur
 syn region  clojurePattern start=/L\=\#"/ skip=/\\\\\|\\"/ end=/"/
 
 syn region  clojureCommentSexp                          start="("                                       end=")" transparent contained contains=clojureCommentSexp
-syn region  clojureComment     matchgroup=clojureParen0 start="(comment"rs=s+1 matchgroup=clojureParen0 end=")"                       contains=clojureCommentSexp
+"syn region  clojureComment     matchgroup=clojureParen0 start="(comment" matchgroup=clojureParen0 end=")"                       contains=clojureCommentSexp
 syn region  clojureComment                              start="#!" end="\n"
 syn match   clojureComment "#_"
 
