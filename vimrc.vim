@@ -444,6 +444,7 @@ let vimclojure#HighlightContrib=1
 let vimclojure#DynamicHighlighting=1
 let vimclojure#ParenRainbow=1
 let vimclojure#WantNailgun = 1
+let vimclojure#SplitSize = 7
 let vimclojure#NailgunClient = vimclojureRoot."/lib/nailgun/ng"
 if windows
     " In stupid windows, no forward slashes, and tack on .exe
