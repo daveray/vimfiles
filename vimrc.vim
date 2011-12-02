@@ -331,7 +331,7 @@ function Vimgrep_file_patterns()
   if ext == "c" || ext == "h" || ext == "cpp" || ext == "cc"
     return "**/*.h **/*.cpp **/*.c **/*.cc"
   else
-    return "**/*." . ext
+    return "**/*"
   endif
 endf
 
