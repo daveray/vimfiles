@@ -19,66 +19,79 @@ function! vimclojure#util#WithSaved(closure)
 	return r
 endfunction
 
+function! s:SavePosition() dict
+	let [ _b, l, c, _o ] = getpos(".")
+	let b = bufnr("%")
+	return [b, l, c]
+endfunction
+
+function! s:RestorePosition(value) dict
+	let [b, l, c] = a:value
+
+	if bufnr("%") != b
+		execute b "buffer!"
+	endif
+	call setpos(".", [0, l, c, 0])
+endfunction
+
 function! vimclojure#util#WithSavedPosition(closure)
-	function a:closure.save() dict
-		let [ _b, l, c, _o ] = getpos(".")
-		let b = bufnr("%")
-		return [b, l, c]
-	endfunction
-
-	function a:closure.restore(value) dict
-		let [b, l, c] = a:value
-
-		if bufnr("%") != b
-			execute b "buffer!"
-		endif
-		call setpos(".", [0, l, c, 0])
-	endfunction
+	let a:closure.save = function("s:SavePosition")
+	let a:closure.restore = function("s:RestorePosition")
 
 	return vimclojure#util#WithSaved(a:closure)
 endfunction
 
-" Fix from MB in this thread:
-" https://groups.google.com/forum/#!msg/vimclojure/rvBSBJYm6WI/L76KnEMA-dQJ
+function! s:SaveRegister(reg)
+	return [a:reg, getreg(a:reg, 1), getregtype(a:reg)]
+endfunction
+
+function! s:SaveRegisters() dict
+	return map([self._register, "", "/", "-",
+				\ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+				\ "s:SaveRegister(v:val)")
+endfunction
+
+function! s:RestoreRegisters(registers) dict
+	for register in a:registers
+		call call(function("setreg"), register)
+	endfor
+endfunction
+
 function! vimclojure#util#WithSavedRegister(reg, closure)
-    let a:closure._register = a:reg
+	let a:closure._register = a:reg
+	let a:closure.save = function("s:SaveRegisters")
+	let a:closure.restore = function("s:RestoreRegisters")
 
-    function a:closure.save() dict
-        return [[self._register, getreg(self._register, 1), getregtype(self._register)],
-                    \ ["0", getreg("0", 1), getregtype("0")],
-                    \ ["", getreg("", 1), getregtype("")]]
-    endfunction
+	return vimclojure#util#WithSaved(a:closure)
+endfunction
 
-    function a:closure.restore(value) dict
-        for register in a:value
-            call call(function("setreg"), register)
-        endfor
-    endfunction
+function! s:SaveOption() dict
+	return eval("&" . self._option)
+endfunction
 
-    return vimclojure#util#WithSaved(a:closure)
+function! s:RestoreOption(value) dict
+	execute "let &" . self._option . " = a:value"
 endfunction
 
 function! vimclojure#util#WithSavedOption(option, closure)
 	let a:closure._option = a:option
-
-	function a:closure.save() dict
-		return eval("&" . self._option)
-	endfunction
-
-	function a:closure.restore(value) dict
-		execute "let &" . self._option . " = a:value"
-	endfunction
+	let a:closure.save = function("s:SaveOption")
+	let a:closure.restore = function("s:RestoreOption")
 
 	return vimclojure#util#WithSaved(a:closure)
 endfunction
 
-function! vimclojure#util#Yank(r, how)
-	let closure = {'reg': a:r, 'yank': a:how}
+function! s:DoYank() dict
+	silent execute self.yank
+	return getreg(self.reg)
+endfunction
 
-	function closure.f() dict
-		silent execute self.yank
-		return getreg(self.reg)
-	endfunction
+function! vimclojure#util#Yank(r, how)
+	let closure = {
+				\ 'reg': a:r,
+				\ 'yank': a:how,
+				\ 'f': function("s:DoYank")
+				\ }
 
 	return vimclojure#util#WithSavedRegister(a:r, closure)
 endfunction
