@@ -86,10 +86,13 @@ if has("mac")
   set macmeta
 end
 
-"colorscheme desert
-colorscheme vividchalk
-set cursorline
-set number
+colorscheme desertEx
+
+" cursorline looks too much like a window border in some colorschemes
+" so don't use it.
+"set cursorline
+
+set number  " Show line numbers
 
 " Backup file related settings
 set backup
@@ -283,10 +286,19 @@ nmap <silent> <Leader>o :only<cr>
 " Use gt and gT to move through tabs
 map <silent> <A-t> :tabnew<cr>
 
-" In insert mode, C-o and C-b open lines below and above
-imap <C-o> <end><cr>
-imap <C-b> <home><cr><Up>
+" In insert mode, alt-o and alt-shift-o open lines below and above
+imap <A-o> <end><cr>
+imap <A-O> <home><cr><Up>
 
+" move current line up
+nmap <A-s> ddp
+nmap <A-S> yyp
+
+" move current line up
+nmap <A-w> ddkP
+nmap <A-W> yyP
+
+" 
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
