@@ -203,8 +203,11 @@ let g:statline_fugitive = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set title
 set cmdheight=2
+
+set wildmode=longest,list,full
+set wildignorecase
 set wildmenu
-set wildchar=<TAB>
+
 set shellslash       " use / rather than \ for filenames
 
 set shortmess=atoOTA " This formats the responses at the bottom so that
