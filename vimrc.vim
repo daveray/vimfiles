@@ -452,6 +452,14 @@ nmap <silent> <Leader>z :FufCoverageFile<cr>
 nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" conqueterm stuff
+let g:ConqueTerm_ReadUnfocused = 1
+if windows
+else
+  nmap <silent> <Leader>h :ConqueTermSplit bash<cr>
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimclojure stuff
 " Settings for VimClojure
 let vimclojureRoot = vimfiles."/bundle/vimclojure-2.3.0"
