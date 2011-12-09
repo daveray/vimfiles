@@ -205,7 +205,9 @@ set title
 set cmdheight=2
 
 set wildmode=longest,list,full
-set wildignorecase
+if exists('&wildignorecase')
+  set wildignorecase
+endif
 set wildmenu
 
 set shellslash       " use / rather than \ for filenames
