@@ -88,9 +88,10 @@ end
 
 colorscheme desertEx
 
-" cursorline looks too much like a window border in some colorschemes
-" so don't use it.
-"set cursorline
+set cursorline
+" Force cursorline to be an underline. Otherwise, it's hard to distinguish
+" between cursorline and inactive window borders.
+hi CursorLine term=underline ctermbg=8 gui=underline guibg=bg
 
 set number  " Show line numbers
 
