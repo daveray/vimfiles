@@ -10,6 +10,8 @@ set columns=90
 " http://dejavu-fonts.org/wiki/Download
 if has("win32") || has("win64")
   set guifont=DejaVu_Sans_Mono:h12:cANSI
+elseif has("mac")
+  set guifont=DejaVu\ Sans\ Mono:h13
 else
   set guifont=DejaVu\ Sans\ Mono\ 12
 endif
