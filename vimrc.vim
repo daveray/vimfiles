@@ -320,6 +320,20 @@ inoremap <C-d> <C-x><C-d>
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Line number stuff
+
+" Toggle between normal and relative line numbering
+function ToggleNumberStyle()
+  if &number
+    set relativenumber
+  else
+    set number
+  endif
+endf
+
+nmap <Leader>n :call ToggleNumberStyle()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
 
 " http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make 
@@ -355,7 +369,7 @@ endf
 
 " <Leader>f* to recursively search all files for the word under the cursor
 map <silent> <Leader>f* :execute Vimgrep_cmd(expand("<cword>"), "**") <Bar> cwindow<CR>
-" <Leader>ff to recursively search all files of same type for the word under the cursor
+" <Leader>fw to recursively search all files of same type for the word under the cursor
 map <silent> <Leader>fw :execute Vimgrep_cmd(expand("<cword>"), Vimgrep_file_patterns()) <Bar> cwindow<CR>
 map <silent> <Leader>fi :execute Vimgrep_cmd(input("Enter a search pattern: ", expand("<cword>")), Vimgrep_file_patterns()) <Bar> cwindow<CR>
 
