@@ -71,11 +71,8 @@ let classpath = join(
 let java_opts = ""
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 
-filetype off " On some Linux systems, this is necessary to make sure pathogen
-             " picks up ftdetect directories in plugins! :(
-syntax on
 filetype plugin indent on
 
 " Default to UTF-8
