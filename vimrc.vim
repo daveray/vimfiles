@@ -197,6 +197,7 @@ set laststatus=2
 let g:statline_syntastic = 0
 " enable fugitive statusline
 let g:statline_fugitive = 1
+let g:statline_no_encoding_string = 'n/a'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set title
