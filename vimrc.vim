@@ -110,9 +110,6 @@ end
 " Settings for slimv/paredit
 let g:paredit_leader=","
 
-" Settings for rails.vim
-let g:rails_menu = 2 " Show Rails menu at top level
-
 " Search related settings
 set magic            " activates the pattern matching characters.
 set wrapscan         " wrap back to top of file on search.
@@ -124,7 +121,6 @@ set smartcase
 " Command history settings
 set history=1000
 set viminfo='10,\"20,ra:,rb:
-" Remember more stuff in viminfo so rail.vim will remember projects
 set viminfo^=!
 
 " smartindent causes annoying comment handling in lanugages that
