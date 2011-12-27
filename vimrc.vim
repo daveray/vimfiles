@@ -148,8 +148,8 @@ nmap <Leader>w :w<cr>
 nmap ; q:
 au CmdwinEnter * startinsert
 
-" Hit k and then j for escape
-inoremap kj <Esc>
+" Hit j and then k for escape
+inoremap jk <Esc>
 " Ctrl-space for omni-complete
 inoremap <c-Space> <c-x><c-o>
 
