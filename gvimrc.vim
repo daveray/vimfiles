@@ -16,3 +16,8 @@ else
   set guifont=DejaVu\ Sans\ Mono\ 12
 endif
 
+" Stupid MacVim doesn't obey this unless it's in gvimrc :(
+if has("mac")
+  hi CursorLine term=underline ctermbg=8 gui=underline guibg=bg
+endif
+
