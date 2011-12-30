@@ -1,6 +1,9 @@
 " File types
 au! BufRead,BufNewFile *.json setfiletype json 
 
+" Treat these files as zips
+au BufReadCmd *.jar,*.war,*.ear,*.sar,*.rar,*.ndp   call zip#Browse(expand("%"))
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AutoCommands                             
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
