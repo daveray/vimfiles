@@ -343,7 +343,7 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 " Map \m to run this make command
-nmap <Leader>m :make<cr>
+nmap <Leader>m :make!<cr>
 
 " if there's an error in a header file, stupid gcc includes a bunch of
 " 'In file included from ...' lines that quickfix doesn't like. Ignore
