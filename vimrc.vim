@@ -70,9 +70,14 @@ let classpath = join(
 
 let java_opts = ""
 
+" Make sure things look nice in the terminal. This requires that the term
+" report itself as xterm-256-color. csapprox requires gui support, so
+" start with gvim -v
+set t_Co=256
+
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#infect()
-
+syntax on
 filetype plugin indent on
 
 " Default to UTF-8
