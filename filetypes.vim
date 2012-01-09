@@ -1,8 +1,12 @@
 " File types
-au! BufRead,BufNewFile *.json setfiletype json 
+au! BufRead,BufNewFile *.json set filetype=json 
+
+" .md is much more often Markdown than modula2 for me
+au! BufRead,BufNewFile *.md set filetype=markdown
 
 " Treat these files as zips
 au BufReadCmd *.jar,*.war,*.ear,*.sar,*.rar,*.ndp   call zip#Browse(expand("%"))
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AutoCommands                             
