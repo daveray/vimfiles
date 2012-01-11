@@ -333,6 +333,12 @@ endf
 nmap <Leader>n :call ToggleNumberStyle()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Wrap stuff
+
+" Toggle line wrapping
+nmap <Leader>r :set wrap!<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
 
 " http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make 
