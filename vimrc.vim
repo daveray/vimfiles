@@ -2,7 +2,7 @@
 " Setup
 "
 " $ cat "runtime vimrc.vim" > ~/.vimrc
-" 
+"
 " Gist:
 " $ git config --global github.user username
 " $ git config --global github.token token
@@ -56,16 +56,16 @@ endif
 " so it can be overridden by project-local versions. Assumes working directory
 " is the project root because that's the right way to use vim :)
 let classpath = join(
-   \[".", 
-   \ "src", "src/main/clojure", "src/main/resources", 
+   \[".",
+   \ "src", "src/main/clojure", "src/main/resources",
    \ "test", "src/test/clojure", "src/test/resources",
    \ "resources",
    \ "classes", "target/classes",
-   \ "lib/*", "lib/dev/*", 
-   \ "bin", 
+   \ "lib/*", "lib/dev/*",
+   \ "bin",
    \ vimfiles."/lib/*",
    \ vimfiles."/lib"
-   \], 
+   \],
    \ sep)
 
 let java_opts = ""
@@ -137,7 +137,7 @@ set shiftwidth=2
 set tabstop=2
 set shiftround       " round indents to multiples of shiftwidth
 set expandtab        " replace tabs with spaces (stupid tabs)
-set formatoptions=tcoq2l 
+set formatoptions=tcoq2l
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
@@ -162,7 +162,7 @@ inoremap <c-Space> <c-x><c-o>
 nnoremap <Leader><Space> G$a
 
 " In visual line mode, I always accidently keep the shift key down
-" which causes me to join lines (or lookup a keyword) instead of highlight 
+" which causes me to join lines (or lookup a keyword) instead of highlight
 " them.
 vnoremap K k
 vnoremap J j
@@ -303,7 +303,7 @@ nmap <A-S> yyp
 nmap <A-w> ddkP
 nmap <A-W> yyP
 
-" 
+"
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
@@ -330,26 +330,25 @@ function ToggleNumberStyle()
   endif
 endf
 
-nmap <Leader>n :call ToggleNumberStyle()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Wrap stuff
-
+" Toggle between absolute and relative line numbers
+nnoremap <silent> <Leader>ln :call ToggleNumberStyle()<cr>
+" Remove trailing whitespace
+nnoremap <silent> <Leader>ls :FixWhitespace<cr>
 " Toggle line wrapping
-nmap <Leader>r :set wrap!<cr>
+nnoremap <silent> <Leader>lw :set wrap!<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
 
-" http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make 
+" http://vim.wikia.com/wiki/Automatically_open_the_quickfix_window_on_:make
 " Automatically open, but do not go to (if there are errors) the quickfix /
-" location list window, or close it when is has become empty. 
+" location list window, or close it when is has become empty.
 "
 " Note: Must allow nesting of autocmds to enable any customizations for quickfix
-" buffers. 
+" buffers.
 " Note: Normally, :cwindow jumps to the quickfix window if the command opens it
 " (but not if it's already open). However, as part of the autocmd, this doesn't
-" seem to happen. 
+" seem to happen.
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
@@ -468,7 +467,7 @@ command -nargs=* Hlog    !hg log <args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
-let g:fuf_coveragefile_exclude = 
+let g:fuf_coveragefile_exclude =
       \'\v\~$|'.
       \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
       \'(^|[/\\])\.(hg|git|bzr|svn|CVS|settings)($|[/\\])|'.
