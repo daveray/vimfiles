@@ -472,9 +472,18 @@ let g:fuf_coveragefile_exclude =
       \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
       \'(^|[/\\])\.(hg|git|bzr|svn|CVS|settings)($|[/\\])|'.
       \'(^|[/\\])(images|autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
-nmap <silent> <Leader>Z :FufBuffer<cr>
-nmap <silent> <Leader>z :FufCoverageFile<cr>
-nmap <silent> <Leader><C-Z> :FufRenewCache<cr>
+nmap <silent> <Leader>zb :FufBuffer<cr>
+nmap <silent> <Leader>zB :FufBuffer!<cr>
+nmap <silent> <Leader>zf :FufCoverageFile<cr>
+nmap <silent> <Leader>zF :FufCoverageFile!<cr>
+nmap <silent> <Leader>zd :FufDir<cr>
+nmap <silent> <Leader>zD :FufDir!<cr>
+nmap <silent> <Leader>zh :FufHelp<cr>
+nmap <silent> <Leader>zH :FufHelp!<cr>
+nmap <silent> <Leader>zr :FufRenewCache<cr>
+
+autocmd FileType fuf imap <buffer> <Tab>   <C-n>
+autocmd FileType fuf imap <buffer> <S-Tab> <C-p>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " conqueterm stuff
