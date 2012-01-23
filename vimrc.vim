@@ -312,8 +312,6 @@ map <C-S-Tab> :bprevious<cr>
 inoremap <C-f> <C-x><C-f>
 " line completion
 inoremap <C-l> <C-x><C-l>
-" macro completion
-inoremap <C-d> <C-x><C-d>
 
 " Toggle nerd tree
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
