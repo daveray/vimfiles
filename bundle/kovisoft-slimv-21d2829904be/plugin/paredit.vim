@@ -1,7 +1,7 @@
 " paredit.vim:
 "               Paredit mode for Slimv
-" Version:      0.9.3
-" Last Change:  30 Nov 2011
+" Version:      0.9.5
+" Last Change:  27 Jan 2012
 " Maintainer:   Tamas Kovacs <kovisoft at gmail dot com>
 " License:      This file is placed in the public domain.
 "               No warranty, express or implied.
@@ -233,7 +233,7 @@ function! PareditOpfunc( func, type, visualmode )
         endif
 
         if matched == ''
-            silent exe "normal! gvxa"
+            silent exe "normal! gvx"
         else
             silent exe "normal! gvc" . matched
             silent exe "normal! l"
@@ -266,8 +266,11 @@ endfunction
 
 " General change operator handling
 function! PareditChange( type, ... )
+    let ve_save = &virtualedit
+    set virtualedit=all
     call PareditOpfunc( 'c', a:type, a:0 )
     startinsert
+    let &virtualedit = ve_save
 endfunction
 
 " Delete v:count number of lines
