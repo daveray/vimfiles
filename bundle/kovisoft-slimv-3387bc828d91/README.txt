@@ -15,7 +15,7 @@ Slimv is a SWANK client for Vim, similarly to SLIME for Emacs. SWANK is a TCP se
 
 Slimv opens the lisp REPL (Read-Eval-Print Loop) inside a Vim buffer. Lisp commands may be entered and executed in the REPL buffer, just as in a regular REPL.
 
-Slimv supports SLIME's debugger, profiler, cross reference, arglist, indentation, symbol name completion functions. The script also has a Common Lisp Hyperspec lookup feature and it is able to lookup symbols in the Clojure API, as well as in JavaDoc.
+Slimv supports SLIME's debugger, inspector, profiler, cross reference, arglist, indentation, symbol name completion functions. The script also has a Common Lisp Hyperspec lookup feature and it is able to lookup symbols in the Clojure API, as well as in JavaDoc.
 
 Slimv comes with Paredit Mode, which is similar to the functionality of paredit.el in Emacs. Paredit Mode tries to maintain the balanced state of matched characters (parenthesis marks, square and curly braces, double quotes). Matched characters are inserted and removed in pairs, also when working with a block of text (well, mostly). Slimv also implements many paredit.el s-expression handling functions, like Split/Join/Wrap/Splice. Slurpage and Barfage known from Emacs is also possible but in a different fashion: you don't move the list element in or out of the list, rather you move the opening or closing parenthesis over the element or sub-list.
 
@@ -44,6 +44,7 @@ Debug commands:
     *  Toggle Trace
     *  Untrace All
     *  Disassemble
+    *  Set Breakpoint
     *  Inspect
     *  Abort
     *  Quit to Toplevel
@@ -106,7 +107,7 @@ Slimv works on Windows, Linux and Mac OS X (via Terminal.app), Cygwin is support
 
 Vim's Python version can be identified with the :ver command, look for the -DDYNAMIC_PYTHON_DLL=\"pythonXX\" string.
 
-Slimv tries to autodetect your Lisp/Clojure/Python/Slime installation directories. If it fails to determine the correct directories, then you need to enter the command to start the SWANK server into your vimrc file.
+Slimv tries to autodetect your Lisp/Clojure/Slime installation directories. If it fails to determine the correct directories, then you need to enter the command to start the SWANK server into your vimrc file.
 
 Linux example:
     let g:slimv_swank_cmd = '! xterm -e sbcl --load /usr/share/common-lisp/source/slime/start-swank.lisp &'
@@ -114,18 +115,31 @@ Linux example:
 Windows example:
     let g:slimv_swank_cmd = '!start "c:/Program Files/Lisp Cabinet/bin/ccl/wx86cl.exe" -l "c:/Program Files/Lisp Cabinet/site/lisp/slime/start-swank.lisp"'
 
+Mac OS X example:
+    let g:slimv_swank_cmd = '!osascript -e "tell application \"Terminal\" to do script \"sbcl --load ~/.vim/slime/start-swank.lisp\""'
+
 For Clojure use the g:slimv_swank_clojure option, e.g.:
     let g:slimv_swank_clojure = '! xterm -e lein swank &' 
 
 
-Important notice to pre-0.8.0 users:
-If you want the old functionality, please set g:slimv_swank to 0 in your vimrc file. Please note however, that the development focuses on the SWANK client.
+Important notice to pre-0.9.0 users:
+If you want the old functionality that did not use the SWANK client, please fetch Slimv version 0.8.6 and set g:slimv_swank to 0 in your vimrc file.
 
 See the included documentation for more complete installation and customization instructions.
 
 --------------------------------------------------------------------------------
 Script versions
 --------------------------------------------------------------------------------
+
+0.9.4: Added highlighting of square and curly brackets for Clojure. Added options to disable Slimv for specific filetypes: g:slimv_disable_clojure, g:slimv_disable_lisp, g:slimv_disable_scheme. Added option g:slimv_indent_keylists (thanks to Andrew Smirnoff). Added "set hidden" for safe switching of modified buffers. Added Help to Inspect and Threads buffers. Evaluate register contents if Eval-Region prefixed by ["x]. Store form in register if Eval-Defun or Eval-Exp prefixed by ["x]. Increased timeout for :create-repl. Stay in REPL buffer if Macroexpand performed in REPL. Search for either (in-ns) or (ns) for Clojure, remove quote character from namespace name. Added SlimvEvalTestDefun() and SlimvEvalTestExp() for immediate testing of the form(s) being evaluated. Bugfixes: Various indentation issues (function name is a subform, let, let*, do, defpackage, defsystem, and [] for Clojure). Eval-Range problem in visual mode. SLDB parsing problem with newlines in description of restarts. REPL autoscroll incidentally stopping (thanks to Andrew Lyon). Added some index out of range checks (thanks to Philipp Marek).
+
+0.9.3: Start Swank server in virtual terminal when running in GNU screen on Linux (thanks to Oleg Terenchuk). Reuse a window for slimv also when there are three or more windows open. Don't go to end of REPL buffer if user moved the cursor away from EOF. Use xdg-open for default browser in Linux. Removed option g:slimv_python. Added option g:slimv_repl_max_len for limiting the number of lines in the REPL buffer. Added option g:slimv_preferred to choose preferred lisp implementation. Query additional parts of big inspected object upon pressing Enter on [--more--]. Thread List is displayed and handled in a separate Threads buffer. Bugfixes: Window navigation problems between source/REPL/SLDB/etc. Error messages when Swank server window is closed. Return control to vim after starting browser defined by g:slimv_browser_cmd. Fixed indentation of arguments before &body argument. Autocomplete for dotted package/namespace names. Indentation of aif.
+
+0.9.2: Added option g:swank_log to enable swank debug log. Added options g:slimv_repl_name, g:slimv_sldb_name, g:slimv_inspect_name. Added option g:slimv_indent_maxlines. Changed Debug-Thread mapping to <leader>dT (g:slimv_keybindings=2) due to conflict with Generate-Tags. Label thread ID in thread list (by Philipp Marek). Set balloonexpr for all buffers (thanks to Philipp Marek). Connect swank server when needed instead of printing an error message (by Philipp Marek). Set expandtab for lisp and clojure files. Kill-Thread kills all threads in the selected range (by Philipp Marek). Bugfixes: Added missing parts of Set-Breakpoint introduced in 0.9.1. Test source lookup (upon pressing Enter) before testing fold toggle in SLDB (by Philipp Marek). Indentation of flet, labels, macrolet. Kill-Thread now really kills thread (by Philipp Marek). Inspect gensyms in frame (by Philipp Marek).
+
+0.9.1: Improved frame number identification in SLDB buffer. Moved frame source location above frame locals in SLDB. Fold frame source location if more than 2 lines. Inspect-In-Frame: preselect symbol under cursor only in variable lines, open Inspector in the other window. Improved XRef file location parsing. Use current paragraph when no range set for Eval-Region and Compile-Region. Added option g:slimv_sldb_wrap, do not set wrap for source buffers. Added Set-Breakpoint command mapped to <leader>B (thanks to Philipp Marek), changed Profile-By-Substring mapping to <leader>P. Set Lisp keyword characters also in SLDB buffer. Bugfixes: Error messages at Connect-Server. Error message for frame source location without filename. XRef output sometimes cut.
+
+0.9.0: Separate buffers for SLDB and Inspector, toggle frame information in SLDB buffer by pressing Enter, look up source when pressing Enter on filename with location in SLDB, added option g:swank_block_size to override Swank output buffer size (thanks to stassats on #lisp and Philipp Marek), removed old non-swank functionality, removed option g:slimv_repl_open, paredit: new mappings [[ and ]] for previous and next defun, bugfixes: various refresh problems (thanks to Philipp Marek), disable debug mode when reconnecting Swank (by Philipp Marek), display multi-line debug condition and frame source location, quote characters in compile (by Philipp Marek), use proper SLDB level when invoking restart (by Philipp Marek), restore all lisp keyword characters in iskeyword, indentation of defgeneric, use proper filename and location when compiling defun or region, buffer corruption when re-triggering timer in insert mode, <End> moved cursor to the right edge of screen in REPL buffer when virtualmode=all.
 
 0.8.6: Handle cl:in-package, common-lisp:in-package (thanks to Philipp Marek), added option g:swank_host to allow connecting to remote Swank server, autodetection of Cake for Clojure (thanks to Chris Cahoon), set paredit mode also for .cl and .rkt files, recognise domain reversed package names in form com.gigamonkeys.pathnames (thanks to has2k1), added curly braces rainbow parenthesis for Clojure, added paredit handling of curly braces for Clojure, use SlimvIndent also for Clojure, handle line number returned in :compilation-result, bugfixes: removed double newline in :read-string (text input), when editing with cw in paredit mode, keep ending whitespaces (thanks to Mats Rauhala), compilation error when Swank does not return file name, skip dot character when Swank returns a dotted pair (a . b).
 
