@@ -360,26 +360,17 @@ nmap <Leader>m :make!<cr>
 set errorformat^=%-GIn\ file\ included\ %.%#
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimgrep bindings and stuff
+" ack bindings and stuff
 
-function Vimgrep_cmd(word, file_patterns)
-  return "noautocmd vimgrep /" . a:word . "/j " . a:file_patterns
-endf
-
-function Vimgrep_file_patterns()
-  let ext = expand("%:e")
-  if ext == "c" || ext == "h" || ext == "cpp" || ext == "cc"
-    return "**/*.h **/*.cpp **/*.c **/*.cc"
-  else
-    return "**/*"
-  endif
+function Ack_cmd(options, word)
+  return "Ack ". a:options . " " . a:word
 endf
 
 " <Leader>f* to recursively search all files for the word under the cursor
-map <silent> <Leader>f* :execute Vimgrep_cmd(expand("<cword>"), "**") <Bar> cwindow<CR>
-" <Leader>fw to recursively search all files of same type for the word under the cursor
-map <silent> <Leader>fw :execute Vimgrep_cmd(expand("<cword>"), Vimgrep_file_patterns()) <Bar> cwindow<CR>
-map <silent> <Leader>fi :execute Vimgrep_cmd(input("Enter a search pattern: ", expand("<cword>")), Vimgrep_file_patterns()) <Bar> cwindow<CR>
+map <silent> <Leader>f* :execute Ack_cmd("--unrestricted", expand("<cword>"))<CR>
+" <Leader>fw to recursively search source files for the word under the cursor
+map <silent> <Leader>fw :execute Ack_cmd("", expand("<cword>"))<CR>
+map <silent> <Leader>fi :execute Ack_cmd("", input("Enter a search pattern: ", expand("<cword>")))<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pipe to buffer
