@@ -128,6 +128,9 @@ set history=1000
 set viminfo='10,\"20,ra:,rb:
 set viminfo^=!
 
+" Always save session with forward slashes. More portable.
+set sessionoptions+=unix,slash
+
 " smartindent causes annoying comment handling in lanugages that
 " use # as the comment delimiter (Python, Tcl, etc)
 " set smartindent
@@ -142,12 +145,13 @@ set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
 " Clear search highlighting
-nmap <silent> <Leader>8 :nohlsearch<cr>
+nmap <silent> <Leader>/ :nohlsearch<cr>
 
 " Typing :q and :w is too much work
 nmap <Leader>q :q<cr>
 nmap <Leader>Q :qall<cr>
 nmap <Leader>w :w<cr>
+nmap <Leader>W :wall<cr>
 
 " Semi-colon enters command window in insert mode
 nmap ; q:
@@ -155,6 +159,7 @@ au CmdwinEnter * startinsert
 
 " Hit j and then k for escape
 inoremap jk <Esc>
+
 " Ctrl-space for omni-complete
 inoremap <c-Space> <c-x><c-o>
 
@@ -166,6 +171,13 @@ nnoremap <Leader><Space> G$a
 " them.
 vnoremap K k
 vnoremap J j
+
+" In the command-link ctrl-j and ctrl-k go up/down. Slightly different from
+" ctrl-p and ctrl-n since it takes what's already been typed into account.
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+cnoremap <c-h> <s-left>
+cnoremap <c-l> <s-right>
 
 " keep selection when changing indention level
 vnoremap < <gv

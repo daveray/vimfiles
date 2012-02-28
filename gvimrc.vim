@@ -7,6 +7,9 @@ set winaltkeys=no       "alt doesn't do window menus
 set lines=65
 set columns=90
 
+" Session settings
+set sessionoptions+=resize " remember vim window size
+
 " http://dejavu-fonts.org/wiki/Download
 if has("win32") || has("win64")
   set guifont=DejaVu_Sans_Mono:h12:cANSI
