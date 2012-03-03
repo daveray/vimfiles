@@ -1,0 +1,33 @@
+if exists('loaded_notes')
+  finish
+end
+
+let g:loaded_notes = 1
+
+" Opens today's log
+nmap <silent> <Leader>nl :execute "split ~/.notes/log/" . strftime("%Y-%m-%d") . ".txt" <cr>
+nmap <silent> <Leader>nn :execute "split ~/.notes/todo.txt" <cr>
+
+function! ReadingNote()
+  let title = tolower(input("Title: "))
+  let file = "~/.notes/read-" . substitute(title, '\s\+', "-", "g") . ".txt"
+  execute "split " . file
+endfunction
+
+nmap <Leader>nr :execute ReadingNote() <cr>
+
+function! FindNotes(cmd)
+  silent execute a:cmd . " ~/.notes/todo.txt"
+  silent execute "FufFileWithCurrentBufferDir"
+endfunction
+
+" fuzzy find over notes
+nmap <silent> <Leader>nz :execute FindNotes("edit") <cr>
+nmap <silent> <Leader>nZ :execute FindNotes("split") <cr>
+
+" ack over notes
+nmap <silent> <Leader>nf :execute "Ack! --text " . input("Search: ") . " ~/.notes/" <cr>
+
+" Insert timestamp
+nmap <silent> <Leader>nt a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+
