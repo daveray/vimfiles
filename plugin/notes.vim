@@ -8,13 +8,13 @@ let g:loaded_notes = 1
 nmap <silent> <Leader>nl :execute "split ~/.notes/log/" . strftime("%Y-%m-%d") . ".txt" <cr>
 nmap <silent> <Leader>nn :execute "split ~/.notes/todo.txt" <cr>
 
-function! ReadingNote()
+function! ComposeNote()
   let title = tolower(input("Title: "))
-  let file = "~/.notes/read-" . substitute(title, '\s\+', "-", "g") . ".txt"
+  let file = "~/.notes/" . substitute(title, '\s\+', "-", "g") . ".txt"
   execute "split " . file
 endfunction
 
-nmap <Leader>nr :execute ReadingNote() <cr>
+nmap <Leader>nc :execute ComposeNote() <cr>
 
 function! FindNotes(cmd)
   silent execute a:cmd . " ~/.notes/todo.txt"
