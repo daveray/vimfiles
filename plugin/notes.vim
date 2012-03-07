@@ -26,7 +26,11 @@ nmap <silent> <Leader>nz :execute FindNotes("edit") <cr>
 nmap <silent> <Leader>nZ :execute FindNotes("split") <cr>
 
 " ack over notes
-nmap <silent> <Leader>nf :execute "Ack! --text " . input("Search: ") . " ~/.notes/" <cr>
+function! SearchNotes(word)
+  silent execute "Ack! -i --text " . a:word . " ~/.notes/"
+endfunction
+nmap <silent> <Leader>nf :execute SearchNotes(input("Search notes: ")) <cr>
+nmap <silent> <Leader>nd :execute SearchNotes("todo") <cr>
 
 " Insert timestamp
 nmap <silent> <Leader>nt a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
