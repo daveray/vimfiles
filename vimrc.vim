@@ -520,6 +520,14 @@ nmap <silent> <Leader>sC :execute Screen_java("clojure.main", []) <cr>
 " Add more macro-y words
 autocmd FileType clojure setlocal lispwords+=describe,it,testing,facts,fact,provided
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" syntastic stuff
+
+" syntastic doesn't know about my c setup so tell it to shutup.
+let g:syntastic_mode_map = { 'mode': 'active',
+                            \ 'active_filetypes': [],
+                            \ 'passive_filetypes': ['c', 'cpp'] }
+
 " Load other files
 runtime filetypes.vim
 runtime subs.vim
