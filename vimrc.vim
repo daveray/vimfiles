@@ -195,6 +195,9 @@ set showmatch        " show matching brackets
 set scrolloff=4      " keep a buffer around the cursor by scrolling the window
 set whichwrap=<,>,h,l,b,s  "cursor keys "wrap"
 
+" I want to be able to select rectangles
+set virtualedit=block
+
 " Status line related settings
 set showcmd
 set showmode         " shows what mode you are in.  Useful for block cmds.
@@ -346,6 +349,9 @@ nnoremap <silent> <Leader>ln :call ToggleNumberStyle()<cr>
 nnoremap <silent> <Leader>ls :FixWhitespace<cr>
 " Toggle line wrapping
 nnoremap <silent> <Leader>lw :set wrap!<cr>
+" Insert a horizontal rule
+nnoremap <silent> <Leader>lh 080i#<esc>
+nnoremap <silent> <Leader>lH 080i-<esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
