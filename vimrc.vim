@@ -256,9 +256,9 @@ cab E e
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Clipboard copy/paste
-vmap <Leader>c "+y
-map <Leader>v "+gp
-map <Leader>V "+gP
+vmap <Leader>y "+y
+map <Leader>p "+gp
+map <Leader>P "+gP
 
 " Move by screen lines rather than actual lines
 map j gj
