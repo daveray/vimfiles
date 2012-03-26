@@ -532,7 +532,7 @@ autocmd FileType clojure setlocal lispwords+=describe,it,testing,facts,fact,prov
 " syntastic doesn't know about my c setup so tell it to shutup.
 let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'active_filetypes': [],
-                            \ 'passive_filetypes': ['c', 'cpp'] }
+                            \ 'passive_filetypes': ['c', 'cpp', 'html'] }
 
 " Load other files
 runtime filetypes.vim
