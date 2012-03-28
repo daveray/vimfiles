@@ -381,7 +381,7 @@ set errorformat^=%-GIn\ file\ included\ %.%#
 " ack bindings and stuff
 
 function Ack_cmd(options, word)
-  return "Ack! ". a:options . " " . a:word
+  return "Ack! ". a:options . " '" . a:word . "'"
 endf
 
 " <Leader>f* to recursively search all files for the word under the cursor

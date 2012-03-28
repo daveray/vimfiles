@@ -27,7 +27,7 @@ nmap <silent> <Leader>nZ :execute FindNotes("split") <cr>
 
 " ack over notes
 function! SearchNotes(word)
-  silent execute "Ack! -i --text " . a:word . " ~/.notes/"
+  silent execute "Ack! -i --text '" . a:word . "' ~/.notes/"
 endfunction
 nmap <silent> <Leader>nf :execute SearchNotes(input("Search notes: ")) <cr>
 nmap <silent> <Leader>nd :execute SearchNotes("todo") <cr>
