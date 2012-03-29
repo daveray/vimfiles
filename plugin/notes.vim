@@ -4,14 +4,39 @@ end
 
 let g:loaded_notes = 1
 
-" Opens today's log
-nmap <silent> <Leader>nl :execute "split ~/.notes/log/" . strftime("%Y-%m-%d") . ".txt" <cr>
+function! GetLogDate(offset)
+    let t = localtime() + (a:offset * 60 * 60 * 24)
+    return strftime("%Y-%m-%d", t)
+endfunction
+
+" Opens today's log in a split
+nmap <silent> <Leader>nl :execute "split ~/.notes/log/" . GetLogDate(0) . ".txt" <cr>
+
+function! EditLog(offset)
+    execute "edit ~/.notes/log/" . GetLogDate(a:offset) . ".txt"
+endfunction
+
+" Open logs going back 10 days
+nmap <silent> <Leader>n0 :execute EditLog(0) <cr>
+nmap <silent> <Leader>n1 :execute EditLog(-1) <cr>
+nmap <silent> <Leader>n2 :execute EditLog(-2) <cr>
+nmap <silent> <Leader>n3 :execute EditLog(-3) <cr>
+nmap <silent> <Leader>n4 :execute EditLog(-4) <cr>
+nmap <silent> <Leader>n5 :execute EditLog(-5) <cr>
+nmap <silent> <Leader>n6 :execute EditLog(-6) <cr>
+nmap <silent> <Leader>n7 :execute EditLog(-7) <cr>
+nmap <silent> <Leader>n8 :execute EditLog(-8) <cr>
+nmap <silent> <Leader>n9 :execute EditLog(-9) <cr>
+
+" open generic todo file
 nmap <silent> <Leader>nn :execute "split ~/.notes/todo.txt" <cr>
 
 function! ComposeNote()
   let title = tolower(input("Title: "))
-  let file = "~/.notes/" . substitute(title, '\s\+', "-", "g") . ".txt"
-  execute "split " . file
+  if title != ""
+    let file = "~/.notes/" . substitute(title, '\s\+', "-", "g") . ".txt"
+    execute "split " . file
+  endif
 endfunction
 
 nmap <Leader>nc :execute ComposeNote() <cr>
