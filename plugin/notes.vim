@@ -4,6 +4,10 @@ end
 
 let g:loaded_notes = 1
 
+let g:notes_dir = "~/.notes"
+
+set path+=~/.notes
+
 function! GetLogDate(offset)
     let t = localtime() + (a:offset * 60 * 60 * 24)
     return strftime("%Y-%m-%d", t)
