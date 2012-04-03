@@ -133,13 +133,15 @@ set sessionoptions+=unix,slash
 
 " smartindent causes annoying comment handling in lanugages that
 " use # as the comment delimiter (Python, Tcl, etc)
+" http://vim.wikia.com/wiki/Restoring_indent_after_typing_hash
 " set smartindent
-set cindent
+" set cindent
 set autoindent
 set shiftwidth=2
 set tabstop=2
 set shiftround       " round indents to multiples of shiftwidth
 set expandtab        " replace tabs with spaces (stupid tabs)
+set smarttab
 set formatoptions=tcoq2l
 set showbreak=X\        " put a little string in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
