@@ -70,6 +70,9 @@ let classpath = join(
 
 let java_opts = ""
 
+" set fairly common path stuff
+set path+=src,test,resources
+
 " Make sure things look nice in the terminal. This requires that the term
 " report itself as xterm-256-color. csapprox requires gui support, so
 " start with gvim -v
