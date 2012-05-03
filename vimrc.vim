@@ -333,6 +333,10 @@ inoremap <C-f> <C-x><C-f>
 " line completion
 inoremap <C-l> <C-x><C-l>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDTree config
+let NERDTreeIgnore=['\.pyc$', '\~$']
+
 " Toggle nerd tree
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 
