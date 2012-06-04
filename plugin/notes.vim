@@ -63,4 +63,6 @@ nmap <silent> <Leader>nd :execute SearchNotes("todo") <cr>
 
 " Insert timestamp
 nmap <silent> <Leader>nt a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+" Insert inline timestamp
+nmap <silent> <Leader>nT i<C-R>=strftime("[%Y-%m-%d %a %I:%M %p]")<Esc>
 
