@@ -362,6 +362,10 @@ nnoremap <silent> <Leader>lw :set wrap!<cr>
 nnoremap <silent> <Leader>lh 080i#<esc>
 nnoremap <silent> <Leader>lH 080i-<esc>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" openurl.vim bindings
+nnoremap <silent> <Leader>ou :OpenUrlInBrowser<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
 
