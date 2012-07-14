@@ -41,8 +41,9 @@ import vim
 import re
 import webbrowser
 
-re_obj = re.compile(r'https?://[a-zA-Z0-9-./#$%&\:?=_]+')
+re_obj = re.compile(r'https?://[a-zA-Z0-9-./#;$%&\:?=_+]+')
 # DR - removed " and ' from regex. Added https
+# DR added +
 line = vim.current.line
 match_obj = re_obj.search(line)
 
