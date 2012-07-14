@@ -517,7 +517,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimclojure stuff
 " Settings for VimClojure
-let vimclojureRoot = vimfiles."/bundle/vimclojure-2.3.0"
+let vimclojureRoot = vimfiles."/bundle/vimclojure-2.3.3"
 let vimclojure#FuzzyIndent=1
 let vimclojure#HighlightBuiltins=1
 let vimclojure#HighlightContrib=1
@@ -525,16 +525,11 @@ let vimclojure#DynamicHighlighting=1
 let vimclojure#ParenRainbow=1
 let vimclojure#WantNailgun = 1
 let vimclojure#SplitSize = 7
-let vimclojure#NailgunClient = vimclojureRoot."/lib/nailgun/ng"
+let vimclojure#NailgunClient = vimfiles."/lib/nailgun/ng"
 if windows
     " In stupid windows, no forward slashes, and tack on .exe
     let vimclojure#NailgunClient = substitute(vimclojure#NailgunClient, "/", "\\", "g") . ".exe"
 endif
-
-" Start vimclojure nailgun server (uses screen.vim to manage lifetime)
-nmap <silent> <Leader>sc :execute Screen_java("vimclojure.nailgun.NGServer 127.0.0.1", [vimclojureRoot . "/lib/*"]) <cr>
-" Start a generic Clojure repl (uses screen.vim)
-nmap <silent> <Leader>sC :execute Screen_java("clojure.main", []) <cr>
 
 " Add more macro-y words
 autocmd FileType clojure setlocal lispwords+=describe,it,testing,facts,fact,provided
