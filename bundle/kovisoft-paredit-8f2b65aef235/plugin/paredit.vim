@@ -1,7 +1,7 @@
 " paredit.vim:
 "               Paredit mode for Slimv
 " Version:      0.9.8
-" Last Change:  14 Jun 2012
+" Last Change:  18 Aug 2012
 " Maintainer:   Tamas Kovacs <kovisoft at gmail dot com>
 " License:      This file is placed in the public domain.
 "               No warranty, express or implied.
@@ -179,8 +179,8 @@ function! PareditInitBuffer()
             execute 'nnoremap <buffer> <silent> ' . g:paredit_leader.'S  :<C-U>call PareditSplice()<CR>'
         endif
 
-        if g:paredit_electric_return && !s:IsReplBuffer()
-            " No electric return in the REPL buffer
+        if g:paredit_electric_return && mapcheck( "<CR>", "i" ) == ""
+            " Do not override any possible mapping for <Enter>
             inoremap <buffer> <expr>   <CR>         PareditEnter()
         endif
     else
@@ -914,6 +914,8 @@ function! s:EraseFwd( count, startcol )
     let line = getline( '.' )
     let pos = col( '.' ) - 1
     let reg = @"
+    let ve_save = &virtualedit
+    set virtualedit=all
     let c = a:count
     while c > 0
         if line[pos] == '\' && line[pos+1] =~ b:any_matched_char && (pos < 1 || line[pos-1] != '\')
@@ -954,6 +956,7 @@ function! s:EraseFwd( count, startcol )
         endif
         let c = c - 1
     endwhile
+    let &virtualedit = ve_save
     call setline( '.', line )
     let @" = reg
 endfunction
@@ -1476,7 +1479,7 @@ function! s:WrapSelection( open, close )
     let c0 = col( "'<" )
     let c1 = col( "'>" )
     if &selection == 'inclusive'
-        let c1 = c1 + 1
+        let c1 = c1 + strlen(matchstr(getline(l1)[c1-1 :], '.'))
     endif
     if [l0, c0] == [0, 0] || [l1, c1] == [0, 0]
         " No selection
