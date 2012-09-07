@@ -66,3 +66,22 @@ nmap <silent> <Leader>nt a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 " Insert inline timestamp
 nmap <silent> <Leader>nT i<C-R>=strftime("[%Y-%m-%d %a %I:%M %p]")<Esc>
 
+function! AdjustDate(date, offset)
+python << EOF
+import vim
+import datetime
+
+result = datetime.datetime.strptime(vim.eval("a:date"), "%Y-%m-%d") + \
+         datetime.timedelta(days=int(vim.eval("a:offset")))
+vim.command("let l:result = '" + result.strftime("%Y-%m-%d") + "'")
+EOF
+return result
+endfunction
+
+function! NextLog(offset)
+  execute "edit ~/.notes/log/" . AdjustDate(expand("%:t:r"), a:offset) . ".txt"
+endfunction
+
+" Move forward back through logs
+nmap <silent> <Leader>n- :execute NextLog(-1) <cr>
+nmap <silent> <Leader>n= :execute NextLog(1) <cr>
