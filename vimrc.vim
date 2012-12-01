@@ -36,10 +36,6 @@
 
 set nocompatible
 
-" I just want paredit
-let g:slimv_loaded = 1
-let g:slimv_clojure_loaded = 1
-
 " Let's remember some things, like where the .vim folder is.
 if has("win32") || has("win64")
     let windows=1
@@ -117,6 +113,7 @@ end
 
 " Settings for slimv/paredit
 let g:paredit_leader=","
+let g:paredit_smartjump=1
 
 " Search related settings
 set magic            " activates the pattern matching characters.
