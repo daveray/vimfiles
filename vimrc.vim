@@ -504,14 +504,6 @@ autocmd FileType fuf imap <buffer> <Tab>   <C-n>
 autocmd FileType fuf imap <buffer> <S-Tab> <C-p>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" conqueterm stuff
-let g:ConqueTerm_ReadUnfocused = 1
-if windows
-else
-  nmap <silent> <Leader>h :ConqueTermSplit bash<cr>
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " rainbow paren stuff
 
 " This sets rainbow parens to match the colors from vimclojure
