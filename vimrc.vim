@@ -512,9 +512,37 @@ else
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" rainbow paren stuff
+
+" This sets rainbow parens to match the colors from vimclojure
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'purple1'],
+    \ ['brown',       'magenta1'],
+    \ ['gray',        'slateblue1'],
+    \ ['black',       'cyan1'],
+    \ ['darkmagenta', 'springgreen1'],
+    \ ['Darkblue',    'green1'],
+    \ ['darkgreen',   'greenyellow'],
+    \ ['darkcyan',    'yellow1'],
+    \ ['darkred',     'orange1'],
+    \ ['red',         'green2'],
+    \ ]
+
+" always on
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimclojure stuff
 " Settings for VimClojure
-let vimclojureRoot = vimfiles."/bundle/vimclojure-2.3.3"
 let vimclojure#FuzzyIndent=1
 let vimclojure#HighlightBuiltins=1
 let vimclojure#HighlightContrib=1
