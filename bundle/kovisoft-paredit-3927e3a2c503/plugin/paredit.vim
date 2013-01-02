@@ -1,7 +1,7 @@
 " paredit.vim:
 "               Paredit mode for Slimv
 " Version:      0.9.10
-" Last Change:  30 Dec 2012
+" Last Change:  02 Jan 2013
 " Maintainer:   Tamas Kovacs <kovisoft at gmail dot com>
 " License:      This file is placed in the public domain.
 "               No warranty, express or implied.
@@ -67,7 +67,7 @@ endif
 let s:skip_sc = '(synIDattr(synID(line("."), col("."), 0), "name") =~ "[Ss]tring\\|[Cc]omment\\|[Ss]pecial" || getline(line("."))[col(".")-2] == "\\")'
 
 " Valid macro prefix characters
-let s:any_macro_prefix   = "'" . '\|`\|#\|@\|\~\|,'
+let s:any_macro_prefix   = "'" . '\|`\|#\|@\|\~\|,\|\^'
 
 " Repeat count for some remapped edit functions (like 'd')
 let s:repeat             = 0
@@ -235,7 +235,7 @@ endfunction
 " Include all prefix and special characters in 'iskeyword'
 function! s:SetKeyword()
     let old_value = &iskeyword
-    if SlimvGetFiletype() =~ '.*\(clojure\|scheme\).*'
+    if &ft =~ '.*\(clojure\|scheme\).*'
         setlocal iskeyword+=+,-,*,/,%,<,=,>,:,$,?,!,@-@,94,~,#,\|,&
     else
         setlocal iskeyword+=+,-,*,/,%,<,=,>,:,$,?,!,@-@,94,~,#,\|,&,.,{,},[,]
@@ -274,7 +274,7 @@ function! PareditOpfunc( func, type, visualmode )
         if a:func == 'd'
             " Register "0 is corrupted by the above 'y' command
             call setreg( '0', save_0 ) 
-        elseif a:visualmode && len(getline("'>")) < col("'>") && len(putreg) > 0
+        elseif a:visualmode && &selection == "inclusive" && len(getline("'>")) < col("'>") && len(putreg) > 0
             " Remove extra space added at the end of line when selection=inclusive, all, or onemore
             let putreg = putreg[:-2]
         endif
@@ -304,6 +304,9 @@ function! PareditOpfunc( func, type, visualmode )
             endif
             if a:func == 'd'
                 let offs = offs - 1
+            elseif instring && matched == '"'
+                " Keep cursor inside the double quotes
+                let offs = offs + 1
             endif
             if offs > 0
                 silent exe "normal! " . string(offs) . "h"
