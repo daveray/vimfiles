@@ -1,7 +1,3 @@
-" enable paredit in vimclojure repl
-if exists('b:vimclojure_repl')
-  call PareditInitBuffer()
-endif
 
 function! s:RunTests(bang)
   let req = (a:bang ? 'Require!' : 'Require')
