@@ -126,7 +126,6 @@ set smartcase
 " Command history settings
 set history=1000
 set viminfo='10,\"20,ra:,rb:
-set viminfo^=!
 
 " Always save session with forward slashes. More portable.
 set sessionoptions+=unix,slash
