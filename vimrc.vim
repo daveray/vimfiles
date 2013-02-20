@@ -72,7 +72,8 @@ set path+=src,test,resources
 " Make sure things look nice in the terminal. This requires that the term
 " report itself as xterm-256-color. csapprox requires gui support, so
 " start with gvim -v
-set t_Co=256
+" I don't thins this is necessary...
+"set t_Co=256
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
 call pathogen#infect()
@@ -142,7 +143,7 @@ set shiftround       " round indents to multiples of shiftwidth
 set expandtab        " replace tabs with spaces (stupid tabs)
 set smarttab
 set formatoptions=tcoq2l
-set showbreak=X\        " put a little string in wrapped lines
+set showbreak=…\     " put a little ... in wrapped lines
 set bs=2		         " allow backspacing over everything in insert mode
 
 " Clear search highlighting
@@ -172,20 +173,31 @@ nnoremap <Leader><Space> G$a
 " them.
 vnoremap K k
 vnoremap J j
-
-" In the command-link ctrl-j and ctrl-k go up/down. Slightly different from
-" ctrl-p and ctrl-n since it takes what's already been typed into account.
-cnoremap <c-j> <down>
-cnoremap <c-k> <up>
-cnoremap <c-h> <s-left>
-cnoremap <c-l> <s-right>
-
+"
 " keep selection when changing indention level
 vnoremap < <gv
 vnoremap > >gv
 " or use tab...
 vmap <tab> >gv
 vmap <s-tab> <gv
+
+" Make command line act like it has readline bindings
+cnoremap <C-a>  <Home>
+cnoremap <C-b>  <Left>
+cnoremap <C-f>  <Right>
+cnoremap <C-d>  <Delete>
+cnoremap <M-b>  <S-Left>
+cnoremap <M-f>  <S-Right>
+cnoremap <M-d>  <S-right><Delete>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
+cnoremap <Esc>d <S-right><Delete>
+cnoremap <C-g>  <C-c>
+
+" In the command-link ctrl-j and ctrl-k go up/down. Slightly different from
+" ctrl-p and ctrl-n since it takes what's already been typed into account.
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
 
 " Swap ` and ' for jumping to a mark.
 nnoremap ' `
@@ -319,10 +331,9 @@ nmap <A-S> yyp
 nmap <A-w> ddkP
 nmap <A-W> yyP
 
-"
-" Switch to alternate file
-map <C-Tab> :bnext<cr>
-map <C-S-Tab> :bprevious<cr>
+" Cycle through buffers
+nmap <C-n> :bnext<cr>
+nmap <C-p> :bprevious<cr>
 
 " file name completion
 inoremap <C-f> <C-x><C-f>
@@ -488,7 +499,7 @@ let g:fuf_coveragefile_exclude =
       \'\v\~$|'.
       \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
       \'(^|[/\\])\.(hg|git|bzr|svn|CVS|settings)($|[/\\])|'.
-      \'(^|[/\\])(images|autodoc|classes|3rd-party|build|input_data|QA)($|[/\\])'
+      \'(^|[/\\])(images|autodoc|classes|3rd-party|build|dist|target|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>zb :FufBuffer<cr>
 nmap <silent> <Leader>zB :FufBuffer!<cr>
 nmap <silent> <Leader>zf :FufCoverageFile<cr>
