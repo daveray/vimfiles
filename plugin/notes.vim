@@ -13,8 +13,9 @@ function! GetLogDate(offset)
     return strftime("%Y-%m-%d", t)
 endfunction
 
-" Opens today's log in a split
+" Opens today's log in a split or in current buffer
 nmap <silent> <Leader>nl :execute "split ~/.notes/log/" . GetLogDate(0) . ".txt" <cr>
+nmap <silent> <Leader>nL :execute "e ~/.notes/log/" . GetLogDate(0) . ".txt" <cr>
 
 function! EditLog(offset)
     execute "edit ~/.notes/log/" . GetLogDate(a:offset) . ".txt"
