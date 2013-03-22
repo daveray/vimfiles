@@ -21,5 +21,9 @@ nnoremap <buffer> cpt :RunTests<cr>
 nnoremap <buffer> cpT :RunTests!<cr>
 
 " Using current value of nreplPort and current directory, connect to nrepl
-nnoremap <buffer> <Leader>c :execute "Connect" "nrepl://localhost:" . nreplPort "."<cr>
+nnoremap <buffer> <Leader>cc :execute "Connect" "nrepl://localhost:" . nreplPort "."<cr>
+
+" Print last stacktrace.
+nnoremap <buffer> <Leader>ce :execute "Eval (clojure.repl/pst)"<cr>
+nnoremap <buffer> <Leader>cE :execute "Pipe Eval (clojure.repl/pst)"<cr>
 
