@@ -23,3 +23,4 @@ nnoremap <buffer> cpT :RunTests!<cr>
 " Using current value of nreplPort and current directory, connect to nrepl
 nnoremap <buffer> <Leader>c :execute "Connect" "nrepl://localhost:" . nreplPort "."<cr>
 
+nnoremap <Tab> ==
