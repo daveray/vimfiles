@@ -509,7 +509,7 @@ let g:fuf_coveragefile_exclude =
       \'\v\~$|'.
       \'\.(class|jar|o|exe|dll|so|pyc|bak|orig|swp|swo|tif|gif)$|'.
       \'(^|[/\\])\.(hg|git|bzr|svn|CVS|settings)($|[/\\])|'.
-      \'(^|[/\\])(images|autodoc|classes|3rd-party|build|dist|target|input_data|QA)($|[/\\])'
+      \'(^|[/\\])(images|autodoc|classes|3rd-party|bin|build|dist|target|input_data|QA)($|[/\\])'
 nmap <silent> <Leader>zb :FufBuffer<cr>
 nmap <silent> <Leader>zB :FufBuffer!<cr>
 nmap <silent> <Leader>zf :FufCoverageFile<cr>
