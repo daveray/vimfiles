@@ -27,3 +27,4 @@ nnoremap <buffer> <Leader>cc :execute "Connect" "nrepl://localhost:" . nreplPort
 nnoremap <buffer> <Leader>ce :execute "Eval (clojure.repl/pst)"<cr>
 nnoremap <buffer> <Leader>cE :execute "Pipe Eval (clojure.repl/pst)"<cr>
 
+nnoremap <Tab> ==
