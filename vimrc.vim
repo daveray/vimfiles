@@ -184,6 +184,7 @@ vmap <s-tab> <gv
 " Make command line act like it has readline bindings
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
+cnoremap <C-e>  <End>
 cnoremap <C-f>  <Right>
 cnoremap <C-d>  <Delete>
 cnoremap <M-b>  <S-Left>
@@ -204,6 +205,7 @@ cnoremap <c-k> <up>
 " remember.
 inoremap <C-a>  <Home>
 inoremap <C-b>  <Left>
+inoremap <C-e>  <End>
 inoremap <C-f>  <Right>
 inoremap <C-d>  <Delete>
 inoremap <M-b>  <S-Left>
