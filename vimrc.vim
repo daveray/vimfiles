@@ -420,7 +420,7 @@ endf
 map <silent> <Leader>f* :execute Ack_cmd("--unrestricted", expand("<cword>"))<CR>
 " <Leader>fw to recursively search source files for the word under the cursor
 map <silent> <Leader>fw :execute Ack_cmd("", expand("<cword>"))<CR>
-map <silent> <Leader>fi :execute Ack_cmd("", input("Enter a search pattern: ", expand("<cword>")))<CR>
+map <silent> <Leader>fi :execute Ack_cmd("", input("Enter a search pattern: "))<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pipe to buffer
@@ -504,6 +504,12 @@ command -nargs=* Hadd    !hg add <args>
 command -nargs=* Hpull   !hg pull <args>
 command -nargs=* Hpush   !hg push <args>
 command -nargs=* Hlog    !hg log <args>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" p4 bindings
+command -nargs=* P4 !p4 <args>
+nmap <silent> <leader>ra :P4 add %<cr>
+nmap <silent> <leader>re :P4 edit %<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
