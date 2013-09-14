@@ -28,3 +28,7 @@ nnoremap <buffer> <Leader>ce :execute "Eval (clojure.repl/pst)"<cr>
 nnoremap <buffer> <Leader>cE :execute "Pipe Eval (clojure.repl/pst)"<cr>
 
 nnoremap <Tab> ==
+
+" A nasty hack to eval a top-level form
+nnoremap <buffer> cpP v(((((((:Eval<cr>
+

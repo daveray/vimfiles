@@ -95,6 +95,14 @@ set cursorline
 " between cursorline and inactive window borders.
 hi CursorLine term=underline ctermbg=8 gui=underline guibg=bg
 
+"if exists('$TMUX')
+  "let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  "let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"else
+  "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"endif
+
 set number  " Show line numbers
 
 " Backup file related settings
@@ -354,7 +362,7 @@ nmap <C-p> :bprevious<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree config
-let NERDTreeIgnore=['\.pyc$', '\~$']
+let NERDTreeIgnore=['^\.gradle$[[dir]]', '^classes$[[dir]]', '^target$[[dir]]', '^bin$[[dir]]', '^build$[[dir]]', '\.pyc$', '\~$']
 
 " Toggle nerd tree
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
