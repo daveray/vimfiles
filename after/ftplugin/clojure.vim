@@ -32,3 +32,7 @@ nnoremap <Tab> ==
 " A nasty hack to eval a top-level form
 nnoremap <buffer> cpP v(((((((:Eval<cr>
 
+" Remove all symbols from the current namespace
+nnoremap <buffer> cpK :execute "Eval (count (mapv #(ns-unmap *ns* %) (keys (ns-interns *ns*))))"<cr>
+" Remove symbol under the cursor from the current namespace
+nnoremap <buffer> cpk :execute "Eval (ns-unmap *ns* '" . expand("<cword>") . ")"<cr>
