@@ -498,9 +498,11 @@ nmap <silent> <leader>ge :Gedit<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gP :Git push<cr>
 nmap <silent> <leader>gp :Git pull<cr>
+nmap <silent> <leader>gv :Gitv --all<cr>
+nmap <silent> <leader>gV :Gitv! --all<cr>
+vmap <silent> <leader>gV :Gitv! --all<cr>
+
 let g:Gitv_OpenHorizontal = 1
-nmap <silent> <leader>gv :Gitv<cr>
-nmap <silent> <leader>gV :Gitv --all<cr>
 " The ctrl key mapping in gitv really chap my hide
 let g:Gitv_DoNotMapCtrlKey = 1
 
