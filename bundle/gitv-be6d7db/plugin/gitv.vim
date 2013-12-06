@@ -15,7 +15,6 @@ set cpo&vim
 "configurable options:
 "g:Gitv_CommitStep                - int
 "g:Gitv_OpenHorizontal            - {0,1,'AUTO'}
-"g:Gitv_GitExecutable             - string
 "g:Gitv_WipeAllOnClose            - int
 "g:Gitv_WrapLines                 - {0,1}
 "g:Gitv_TruncateCommitSubjects    - {0,1}
@@ -24,10 +23,6 @@ set cpo&vim
 
 if !exists("g:Gitv_CommitStep")
     let g:Gitv_CommitStep = &lines
-endif
-
-if !exists('g:Gitv_GitExecutable')
-    let g:Gitv_GitExecutable = 'git'
 endif
 
 if !exists('g:Gitv_WipeAllOnClose')
@@ -79,11 +74,11 @@ fu! Gitv_OpenGitCommand(command, windowCmd, ...) "{{{
         if a:windowCmd == ''
             silent setlocal modifiable
             silent setlocal noreadonly
-            1,$ d
+            1,$ d _
         else
             let goBackTo       = winnr()
-            let dir            = s:GetRepoDir()
-            let workingDir     = fnamemodify(dir,':h')
+            let dir            = fugitive#buffer().repo().dir()
+            let workingDir     = fugitive#buffer().repo().tree()
             let cd             = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
             let bufferDir      = getcwd()
             let tempSplitBelow = &splitbelow
@@ -114,15 +109,17 @@ fu! Gitv_OpenGitCommand(command, windowCmd, ...) "{{{
         silent setlocal noswapfile
         silent setlocal bufhidden=wipe
         silent setlocal nonumber
+        if exists('+relativenumber')
+            silent setlocal norelativenumber
+        endif
         if g:Gitv_WrapLines
             silent setlocal wrap
         else
             silent setlocal nowrap
         endif
         silent setlocal fdm=syntax
-        silent setlocal foldlevel=0
-        nmap <buffer> <silent> q :q!<CR>
-        nmap <buffer> <silent> u :if exists('b:Git_Command')<bar>call Gitv_OpenGitCommand(b:Git_Command, '', 1)<bar>endif<cr>
+        nnoremap <buffer> <silent> q :q!<CR>
+        nnoremap <buffer> <silent> u :if exists('b:Git_Command')<bar>call Gitv_OpenGitCommand(b:Git_Command, '', 1)<bar>endif<cr>
         call append(0, split(result, '\n')) "system converts eols to \n regardless of os.
         silent setlocal nomodifiable
         silent setlocal readonly
@@ -136,7 +133,7 @@ fu! s:RunGitCommand(command, verbatim) "{{{
     "switches to the buffer repository before running the command and switches back after.
     if !a:verbatim
         "switches to the buffer repository before running the command and switches back after.
-        let cmd                = g:Gitv_GitExecutable.' --git-dir="{DIR}" '. a:command
+        let cmd                = fugitive#buffer().repo().git_command() .' '. a:command
         let [result, finalCmd] = s:RunCommandRelativeToGitRepo(cmd)
     else
         let result   = system(a:command)
@@ -144,32 +141,21 @@ fu! s:RunGitCommand(command, verbatim) "{{{
     endif
     return [result, finalCmd]
 endfu "}}}
-fu! s:RunCommandRelativeToGitRepo(command) "{{{
-    "this runs the command verbatim but first changing to the root git dir
-    "it also replaces any occurance of '{DIR}' in the command with the root git dir.
-    let dir        = s:GetRepoDir()
-    let workingDir = fnamemodify(dir,':h')
-    if workingDir == ''
-        return 0
-    endif
+fu! s:RunCommandRelativeToGitRepo(command) abort "{{{
+    " Runs the command verbatim but first changing to the root git dir.
+    " Input commands should include a --git-dir argument to git (see
+    " fugitive#buffer().repo().git_command()).
+    let workingDir = fugitive#buffer().repo().tree()
 
     let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
     let bufferDir = getcwd()
     try
         execute cd.'`=workingDir`'
-        let finalCmd = substitute(a:command, '{DIR}', dir, 'g')
-        let result   = system(finalCmd)
+        let result   = system(a:command)
     finally
         execute cd.'`=bufferDir`'
     endtry
-    return [result, finalCmd]
-endfu "}}}
-fu! s:GetRepoDir() "{{{
-    let dir = fugitive#buffer().repo().dir()
-    if dir == ''
-        echom "No git repository could be found."
-    endif
-    return dir
+    return [result, a:command]
 endfu "}}} }}}
 "Open And Update Gitv:"{{{
 fu! s:OpenGitv(extraArgs, fileMode, rangeStart, rangeEnd) "{{{
@@ -199,7 +185,7 @@ endfu "}}}
 fu! s:OpenBrowserMode(extraArgs) "{{{
     "this throws an exception if not a git repo which is caught immediately
     let fubuffer = fugitive#buffer()
-    silent Gtabedit HEAD
+    silent Gtabedit HEAD:
 
     if s:IsHorizontal()
         let direction = 'new gitv'.'-'.g:Gitv_InstanceCounter
@@ -248,6 +234,15 @@ fu! s:LoadGitv(direction, reload, commitCount, extraArgs, filePath, range) "{{{
 
     echom "Loaded up to " . a:commitCount . " commits."
     return 1
+endf "}}}
+fu! s:ToggleArg(args, toggle) "{{{
+    if matchstr(a:args, a:toggle) == ''
+      let NewArgs = a:args . ' ' . a:toggle
+    else
+      let NewArgs = substitute(a:args, ' ' . a:toggle, '', '')
+    endif
+    let b:Gitv_ExtraArgs = NewArgs
+    return NewArgs
 endf "}}}
 fu! s:ConstructAndExecuteCmd(direction, commitCount, extraArgs, filePath, range) "{{{
     if a:range == [] "no range, setup and execute the command
@@ -307,12 +302,12 @@ fu! s:GetFileSlices(range, filePath, commitCount, extraArgs) "{{{
     "NOTE: this could get massive for a large repo and large range
     let range     = a:range[0] . ',' . a:range[1]
     let range     = substitute(range, "'", "'\\\\''", 'g') "force unix style escaping even on windows
-    let git       = g:Gitv_GitExecutable
-    let sliceCmd  = "for hash in `".git." --git-dir=\"{DIR}\" log " . a:extraArgs
+    let git       = fugitive#buffer().repo().git_command()
+    let sliceCmd  = "for hash in `".git." log " . a:extraArgs
     let sliceCmd .= " --no-color --pretty=format:%H -".a:commitCount."-- " . a:filePath . '`; '
     let sliceCmd .= "do "
     let sliceCmd .= 'echo "****${hash}"; '
-    let sliceCmd .= git." --git-dir=\"{DIR}\" --no-pager blame -s -L '" . range . "' ${hash} " . a:filePath . "; "
+    let sliceCmd .= git." --no-pager blame -s -L '" . range . "' ${hash} " . a:filePath . "; "
     let sliceCmd .= "done"
     let finalCmd  = "bash -c " . shellescape(sliceCmd)
 
@@ -356,10 +351,10 @@ fu! s:CompareFileAtCommits(slices, c1sha, c2sha) "{{{
 endfu "}}}
 fu! s:GetFinalOutputForHashes(hashes) "{{{
     if len(a:hashes) > 0
-        let git       = g:Gitv_GitExecutable
+        let git       = fugitive#buffer().repo().git_command()
         let cmd       = 'for hash in ' . join(a:hashes, " ") . '; '
         let cmd      .= "do "
-        let cmd      .= git.' --git-dir="{DIR}" log --no-color --decorate=full --pretty=format:"%d %s__SEP__%ar__SEP__%an__SEP__[%h]%n" --graph -1 ${hash}; '
+        let cmd      .= git.' log --no-color --decorate=full --pretty=format:"%d %s__SEP__%ar__SEP__%an__SEP__[%h]%n" --graph -1 ${hash}; '
         let cmd      .= 'done'
         let finalCmd  = "bash -c " . shellescape(cmd)
 
@@ -444,34 +439,53 @@ fu! s:AddFileModeSpecific(filePath, range, commitCount) "{{{
 endfu "}}}
 fu! s:SetupMappings() "{{{
     "operations
-    nmap <buffer> <silent> <cr> :call <SID>OpenGitvCommit("Gedit", 0)<cr>
-    nmap <buffer> <silent> o :call <SID>OpenGitvCommit("Gsplit", 0)<cr>
-    nmap <buffer> <silent> O :call <SID>OpenGitvCommit("Gtabedit", 0)<cr>
-    nmap <buffer> <silent> s :call <SID>OpenGitvCommit("Gvsplit", 0)<cr>
-    "force opening the fugitive buffer for the commit
-    nmap <buffer> <silent> <c-cr> :call <SID>OpenGitvCommit("Gedit", 1)<cr>
+    nnoremap <buffer> <silent> <cr> :call <SID>OpenGitvCommit("Gedit", 0)<cr>
+    nnoremap <buffer> <silent> o :call <SID>OpenGitvCommit("Gsplit", 0)<cr>
+    nnoremap <buffer> <silent> O :call <SID>OpenGitvCommit("Gtabedit", 0)<cr>
+    nnoremap <buffer> <silent> s :call <SID>OpenGitvCommit("Gvsplit", 0)<cr>
+    if(!exists("g:Gitv_DoNotMapCtrlKey"))
+        nnoremap <buffer> <silent> <C-n> :<C-U>call <SID>JumpToCommit(0)<cr>
+        nnoremap <buffer> <silent> <C-p> :<C-U>call <SID>JumpToCommit(1)<cr>
+        "fuzzyfinder style key mappings
+        nnoremap <buffer> <silent> <c-j> :call <SID>OpenGitvCommit("Gsplit", 0)<cr>
+        nnoremap <buffer> <silent> <c-k> :call <SID>OpenGitvCommit("Gvsplit", 0)<cr>
+        nnoremap <buffer> <silent> <c-l> :call <SID>OpenGitvCommit("Gtabedit", 0)<cr>
+        "force opening the fugitive buffer for the commit
+        nnoremap <buffer> <silent> <c-cr> :call <SID>OpenGitvCommit("Gedit", 1)<cr>
+    endif
+    "for the terminal
+    nnoremap <buffer> <silent> i :call <SID>OpenGitvCommit("Gedit", 1)<cr>
 
-    nmap <buffer> <silent> q :call <SID>CloseGitv()<cr>
-    nmap <buffer> <silent> u :call <SID>LoadGitv('', 1, b:Gitv_CommitCount, b:Gitv_ExtraArgs, <SID>GetRelativeFilePath(), <SID>GetRange())<cr>
-    nmap <buffer> <silent> co :call <SID>CheckOutGitvCommit()<cr>
+    nnoremap <buffer> <silent> q :call <SID>CloseGitv()<cr>
+    nnoremap <buffer> <silent> u :call <SID>LoadGitv('', 1, b:Gitv_CommitCount, b:Gitv_ExtraArgs, <SID>GetRelativeFilePath(), <SID>GetRange())<cr>
+    nnoremap <buffer> <silent> a :call <SID>LoadGitv('', 0, b:Gitv_CommitCount, <SID>ToggleArg(b:Gitv_ExtraArgs, '--all'), <SID>GetRelativeFilePath(), <SID>GetRange())<cr>
+    nnoremap <buffer> <silent> co :call <SID>CheckOutGitvCommit()<cr>
 
-    nmap <buffer> <silent> D :call <SID>DiffGitvCommit()<cr>
-    vmap <buffer> <silent> D :call <SID>DiffGitvCommit()<cr>
+    nnoremap <buffer> <silent> D :call <SID>DiffGitvCommit()<cr>
+    vnoremap <buffer> <silent> D :call <SID>DiffGitvCommit()<cr>
 
-    nmap <buffer> <silent> S :call <SID>StatGitvCommit()<cr>
-    vmap <buffer> <silent> S :call <SID>StatGitvCommit()<cr>
+    nnoremap <buffer> <silent> S :call <SID>StatGitvCommit()<cr>
+    vnoremap <buffer> <silent> S :call <SID>StatGitvCommit()<cr>
 
-    vmap <buffer> <silent> m :call <SID>MergeBranches()<cr>
+    vnoremap <buffer> <silent> m :call <SID>MergeBranches()<cr>
+    nnoremap <buffer> <silent> <leader>m :call <SID>MergeToCurrent()<cr>
 
     "movement
-    nmap <buffer> <silent> x :call <SID>JumpToBranch(0)<cr>
-    nmap <buffer> <silent> X :call <SID>JumpToBranch(1)<cr>
-    nmap <buffer> <silent> r :call <SID>JumpToRef(0)<cr>
-    nmap <buffer> <silent> R :call <SID>JumpToRef(1)<cr>
-    nmap <buffer> <silent> P :call <SID>JumpToHead()<cr>
+    nnoremap <buffer> <silent> x :call <SID>JumpToBranch(0)<cr>
+    nnoremap <buffer> <silent> X :call <SID>JumpToBranch(1)<cr>
+    nnoremap <buffer> <silent> r :call <SID>JumpToRef(0)<cr>
+    nnoremap <buffer> <silent> R :call <SID>JumpToRef(1)<cr>
+    nnoremap <buffer> <silent> P :call <SID>JumpToHead()<cr>
+    nnoremap <buffer> <silent> p :<c-u>call <SID>JumpToParent()<cr>
 
     "misc
-    nmap <buffer> git :Git 
+    nnoremap <buffer> git :Git<space>
+    " yank the commit hash
+    if !has('unix') || has('xterm_clipboard')
+        nnoremap <buffer> <silent> yc m'$F[w"+yw`'
+    else
+        nnoremap <buffer> <silent> yc m'$F[wyw`'
+    endif
 endf "}}}
 fu! s:SetupBufferCommands(fileMode) "{{{
     silent command! -buffer -nargs=* -complete=customlist,s:fugitive_GitComplete Git call <sid>MoveIntoPreviewAndExecute("unsilent Git <args>",1)|normal u
@@ -512,6 +526,18 @@ fu! s:GetGitvRefs(line) "{{{
     let refstr = matchstr(l, "^\\(\\(|\\|\\/\\|\\\\\\|\\*\\)\\s\\?\\)*\\s\\+(\\zs.\\{-}\\ze)")
     let refs = split(refstr, ', ')
     return refs
+endf "}}}
+fu! s:GetParentSha(sha, parentNum) "{{{
+    if a:parentNum < 1
+        return
+    endif
+    let hashCmd = "git log -n1 --pretty=format:%p " . a:sha
+    let [result,cmd] = s:RunGitCommand(hashCmd, 1)
+    let parents=split(result, ' ')
+    if a:parentNum > len(parents)
+        return
+    endif
+    return parents[a:parentNum-1]
 endf "}}}
 fu! s:GetConfirmString(list, ...) "{{{ {{{
     "returns a string to be used with confirm out of the choices in a:list
@@ -855,6 +881,11 @@ fu! s:CloseGitv() "{{{
     if s:IsFileMode()
         q
     else
+        "only tab: quit vim
+        if tabpagenr() == tabpagenr('$') && tabpagenr() == 1
+            qa
+        endif
+
         if g:Gitv_WipeAllOnClose
             silent windo setlocal bufhidden=wipe
         endif
@@ -927,6 +958,23 @@ fu! s:PerformMerge(target, mergeBranch, ff) abort
             exec 'Git branch -d ' . a:mergeBranch
         endif
     endif
+endfu
+fu! s:MergeToCurrent()
+    let refs = s:GetGitvRefs(".")
+    call filter(refs, 'v:val !=? "HEAD"')
+    if len(refs) < 1
+        echoerr 'No ref found to perform a merge.'
+        return
+    endif
+    let target = refs[0]
+    let target = substitute(target, "^[tr]:", "", "")
+
+    let choices = "&Yes\n&No\n&Cancel"
+    let ff = confirm("Use fast-forward, if possible, to merge '". target . "' in to 'HEAD'?", choices)
+    if ff == 0 || ff == 3 | return | endif
+    let ff = ff == 1 ? ff : 0
+
+    call s:PerformMerge("HEAD", target, ff)
 endfu "}}}
 fu! s:StatGitvCommit() range "{{{
     let shafirst = s:GetGitvSha(a:firstline)
@@ -969,6 +1017,36 @@ fu! s:JumpToRef(backward) "{{{
 endf "}}}
 fu! s:JumpToHead() "{{{
     silent! /^\(\(|\|\/\|\\\|\*\)\s\?\)\+\s\+\zs(HEAD/
+endf "}}}
+fu! s:JumpToCommit(backwards) "{{{
+    let flags = 'W'
+    if a:backwards
+        let flags .= 'b'
+    endif
+
+    let c = v:count1
+    while c > 0
+        let c-=1
+        call search( '^[|\/\\ ]*\zs\*', flags )
+    endwhile
+
+    redraw
+    call s:OpenGitvCommit("Gedit", 0)
+endf "}}}
+fu! s:JumpToParent() "{{{
+    let sha = s:GetGitvSha(line('.'))
+    if sha == ""
+        return
+    endif
+    let parent = s:GetParentSha(sha, v:count1 )
+    if parent == ""
+        echom 'Parent '.v:count1.' is out of range'
+        return
+    endif
+    while !search( '^\ze.*\['.parent.'\]$', 'Ws' )
+        call s:LoadGitv('', 1, b:Gitv_CommitCount+g:Gitv_CommitStep, b:Gitv_ExtraArgs, s:GetRelativeFilePath(), s:GetRange())
+    endwhile
+    redraw
 endf "}}}
 "}}} }}}
 "Align And Truncate Functions: "{{{
