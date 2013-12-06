@@ -501,6 +501,8 @@ nmap <silent> <leader>gp :Git pull<cr>
 let g:Gitv_OpenHorizontal = 1
 nmap <silent> <leader>gv :Gitv<cr>
 nmap <silent> <leader>gV :Gitv --all<cr>
+" The ctrl key mapping in gitv really chap my hide
+let g:Gitv_DoNotMapCtrlKey = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
