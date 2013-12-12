@@ -2,21 +2,6 @@
 " Command that runs tests in the current namespace
 command! -buffer -bar -bang RunTests :Require<bang><bar>Eval (clojure.test/run-tests)
 
-function! s:ResetNamespace()
-  let ns = foreplay#ns()
-  " switch to neutral ground, kill the ns, switch back to the ns.
-  let cmd = "(in-ns 'clojure.core)(remove-ns '" . ns . ")(in-ns '" . ns . ")"
-  echo cmd
-  try
-    call foreplay#eval(cmd)
-  catch /^Clojure:.*/
-    return ''
-  endtry
-endfunction
-
-" Command that brutally guts a namespace.
-command! -buffer -bar ResetNamespace :call s:ResetNamespace()
-
 nnoremap <buffer> cpt :RunTests<cr>
 nnoremap <buffer> cpT :RunTests!<cr>
 
@@ -36,3 +21,15 @@ nnoremap <buffer> cpP v(((((((:Eval<cr>
 nnoremap <buffer> cpK :execute "Eval (count (mapv #(ns-unmap *ns* %) (keys (ns-interns *ns*))))"<cr>
 " Remove symbol under the cursor from the current namespace
 nnoremap <buffer> cpk :execute "Eval (ns-unmap *ns* '" . expand("<cword>") . ")"<cr>
+
+function! CopyInNs()
+  let ns = fireplace#ns()
+  " switch to neutral ground, kill the ns, switch back to the ns.
+  let cmd = "(in-ns '" . ns . ")"
+  echo cmd
+  let @+ = cmd
+endfunction
+
+" Copy an in-ns expression for current namespace to system clipboard
+nnoremap <buffer> <Leader>ci :call CopyInNs()<cr>
+
