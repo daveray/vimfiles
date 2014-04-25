@@ -163,6 +163,8 @@ nmap <Leader>Q :qall<cr>
 nmap <Leader>w :w<cr>
 nmap <Leader>W :wall<cr>
 
+nmap <F5> :e %<cr>
+
 " Semi-colon enters command window in insert mode
 nmap ; q:
 au CmdwinEnter * startinsert

@@ -1,3 +1,7 @@
+" If not explicitly set, default to port to 9999
+if !exists('nreplPort')
+  let nreplPort='9999'
+endif
 
 " Command that runs tests in the current namespace
 command! -buffer -bar -bang RunTests :Require<bang><bar>Eval (clojure.test/run-tests)
@@ -13,9 +17,6 @@ nnoremap <buffer> <Leader>ce :execute "Eval (clojure.repl/pst)"<cr>
 nnoremap <buffer> <Leader>cE :execute "Pipe Eval (clojure.repl/pst)"<cr>
 
 nnoremap <Tab> ==
-
-" A nasty hack to eval a top-level form
-nnoremap <buffer> cpP v(((((((:Eval<cr>
 
 " Remove all symbols from the current namespace
 nnoremap <buffer> cpK :execute "Eval (count (mapv #(ns-unmap *ns* %) (keys (ns-interns *ns*))))"<cr>
