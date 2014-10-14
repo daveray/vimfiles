@@ -578,6 +578,12 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-fireplace and friends stuff
+" I'd rather start the repl myself, plus this fixes checkout deps issues
+" https://github.com/tpope/vim-leiningen/issues/3
+let g:leiningen_no_auto_repl = 1
+
 " Further clojure settings are in .vim/after/indent/clojure.vim
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
