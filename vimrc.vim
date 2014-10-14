@@ -434,6 +434,7 @@ map <silent> <Leader>f* :execute Ack_cmd("--unrestricted", expand("<cword>"))<CR
 " <Leader>fw to recursively search source files for the word under the cursor
 map <silent> <Leader>fw :execute Ack_cmd("", expand("<cword>"))<CR>
 map <silent> <Leader>fi :execute Ack_cmd("", input("Enter a search pattern: "))<CR>
+map <silent> <Leader>ff :cnext<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pipe to buffer
