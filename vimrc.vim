@@ -104,6 +104,9 @@ hi CursorLine term=underline ctermbg=8 gui=underline guibg=bg
 "endif
 
 set number  " Show line numbers
+if exists('+relativenumber')
+  set relativenumber
+endif
 
 " Backup file related settings
 set backup
