@@ -88,6 +88,8 @@ set viminfo='10,\"20,ra:,rb:
 
 " Always save session with forward slashes. More portable.
 set sessionoptions+=unix,slash
+set autoread
+set fileformats+=mac
 
 " smartindent causes annoying comment handling in lanugages that
 " use # as the comment delimiter (Python, Tcl, etc)
@@ -125,9 +127,6 @@ inoremap jk <Esc>
 " Ctrl-space for omni-complete
 inoremap <c-Space> <c-x><c-o>
 
-" Space-space goes to end of file and starts editing.
-nnoremap <Leader><Space> G$a
-
 " In visual line mode, I always accidently keep the shift key down
 " which causes me to join lines (or lookup a keyword) instead of highlight
 " them.
@@ -160,6 +159,8 @@ cnoremap <C-g>  <C-c>
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 
+inoremap <C-U> <C-G>u<C-U>
+
 " Make insert mode act like it has readline bindings
 " I know some of these things have other meanings, but it's just too much to
 " remember.
@@ -182,8 +183,10 @@ nnoremap ` '
 
 set showmatch        " show matching brackets
 
-set scrolloff=4      " keep a buffer around the cursor by scrolling the window
+set scrolloff=3      " keep a buffer around the cursor by scrolling the window
+set sidescrolloff=3
 set whichwrap=<,>,h,l,b,s  "cursor keys "wrap"
+set display+=lastline
 
 " I want to be able to select rectangles
 set virtualedit=block
