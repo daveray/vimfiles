@@ -6,3 +6,4 @@ tags-ja
 *.swo
 .VimballRecord
 .netrwhist
+bundle/git-*/
