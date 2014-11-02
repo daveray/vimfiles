@@ -61,3 +61,6 @@ nmap <buffer> <Leader>c! yab)A<cr><esc>pc!ab
 " Snippets
 command! -buffer -nargs=0 SchemaUseFixture :normal i(clojure.test/use-fixtures :once schema.test/validate-schemas)<cr>
 
+" Add to ns :require
+command! -buffer -nargs=1 -complete=customlist,fireplace#ns_complete NSRequire :normal gg/(:require [<cr>%i<cr>[<args> :as ]
+

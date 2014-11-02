@@ -426,7 +426,7 @@ set errorformat^=%-GIn\ file\ included\ %.%#
 " ack bindings and stuff
 
 function Ack_cmd(options, word)
-  return "Ack! ". a:options . " '" . a:word . "'"
+  return "Ack! -Q ". a:options . " '" . a:word . "'"
 endf
 
 " <Leader>f* to recursively search all files for the word under the cursor
@@ -461,41 +461,12 @@ command! -nargs=+ -complete=command Pipe call PipeToBuffer(<q-args>)
 map <Leader>b :Sscratch<CR>
 vmap <Leader>b y:Sscratch<CR>Gp
 
-function! Screenshell_prefix()
-    return "ScreenShell cd \"" . fnamemodify(".",":p") . "\""
-endf
-
-function Screen_java(class, more_cp)
-    let cp = g:classpath
-    if !empty(a:more_cp)
-        let cp .= g:sep . join(a:more_cp, g:sep)
-    endif
-    return Screenshell_prefix() . "; java -Xmx512M " . g:java_opts . " -cp \"" . cp . "\" " . a:class
-endf
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
-" Start a vanilla shell
-"nmap <silent> <Leader>so :execute "ScreenShell cd \"" . fnamemodify(".",":p") . "\"" <cr>
-nmap <silent> <Leader>so :execute Screenshell_prefix() <cr>
-" Quit the screen session
-nmap <silent> <Leader>sq :ScreenQuit<cr>
-" Start a Rhino JavaScript repl
-nmap <silent> <Leader>sj :execute Screen_java("org.mozilla.javascript.tools.shell.Main", []) <cr>
-" Start a Ruby repl
-nmap <silent> <Leader>sr :execute Screenshell_prefix() . "; jirb" <cr>
-nmap <silent> <Leader>sR :execute Screenshell_prefix() . "; irb" <cr>
-" Start a Python repl
-nmap <silent> <Leader>sp :execute Screenshell_prefix() . "; python" <cr>
-nmap <silent> <Leader>sP :execute Screenshell_prefix() . "; jython" <cr>
-" Send current file for visual selection to screen
+" Send current file or visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
-" Start a Haskell repl
-nmap <silent> <Leader>sh :execute Screenshell_prefix() . "; ghci" <cr>
-" Don't forget about clojure (<Leader>sc) below!
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git bindings
@@ -590,9 +561,28 @@ let g:leiningen_no_auto_repl = 1
 " syntastic stuff
 
 " syntastic doesn't know about my c setup so tell it to shutup.
-let g:syntastic_mode_map = { 'mode': 'active',
-                            \ 'active_filetypes': [],
-                            \ 'passive_filetypes': ['c', 'cpp', 'html'] }
+"let g:syntastic_mode_map = { 'mode': 'active',
+"                            \ 'active_filetypes': [],
+"                            \ 'passive_filetypes': ['c', 'cpp', 'html'] }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" haskell stuff
+" also in after/ftplugin/haskell.vim
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 5
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" misc
 
 " Load other files
 runtime filetypes.vim
