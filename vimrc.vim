@@ -2,37 +2,6 @@
 " Setup
 "
 " $ cat "runtime vimrc.vim" > ~/.vimrc
-"
-" Gist:
-" $ git config --global github.user username
-" $ git config --global github.token token
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tips
-"
-" :Vedit vimrc.vim - Edit this file
-" http://vim.wikia.com/wiki/Best_Vim_Tips
-" I            Insert at start of line
-" A            Insert at end of line
-" * or #       Search for word under cursor (forward/back)
-" :sp <file>   Split and open file (i in Nerdtree)
-" H, M, L      Jump to top/middle/bottom of window
-" <C-f><C-b>   PageUp/PageDown
-" g; or g,     Jump to last/next change position (:changes)
-" gi           Insert at last edited position
-" gf           Open file under cursor
-" gq           Wrap lines using textwidth setting
-" t{char}      Move to before {char}
-" ~            Invert case of current char
-" <C-o><C-i>   Walk through jump list
-" <C-a><C-x>   Inc/Dec number under cursor
-" <C-r><C-a>   Bring word under cursor into command line
-" <C-r>%       Bring current file name into command line
-" yiw          Yank current word
-" yfX          Yank from current position to first instance of X
-" daw          Delete word under cursor
-"
-" To log vim stuff: $ vim -V9log.txt ...
 
 set nocompatible
 
@@ -46,25 +15,6 @@ else
     let vimfiles=$HOME . "/.vim"
     let sep=":"
 endif
-
-" Build a reasonable classpath for most Maven, Leiningen, or whatever projects
-" This is used by the Clojure and Rhino repls below. Note that lib/* is last
-" so it can be overridden by project-local versions. Assumes working directory
-" is the project root because that's the right way to use vim :)
-let classpath = join(
-   \[".",
-   \ "src", "src/main/clojure", "src/main/resources",
-   \ "test", "src/test/clojure", "src/test/resources",
-   \ "resources",
-   \ "classes", "target/classes",
-   \ "lib/*", "lib/dev/*",
-   \ "bin",
-   \ vimfiles."/lib/*",
-   \ vimfiles."/lib"
-   \],
-   \ sep)
-
-let java_opts = ""
 
 " set fairly common path stuff
 set path+=src,test,resources
@@ -104,11 +54,6 @@ hi CursorLine term=underline ctermbg=8 gui=underline guibg=bg
   "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "endif
-
-set number  " Show line numbers
-if exists('+relativenumber')
-  set relativenumber
-endif
 
 " Backup file related settings
 set backup
@@ -249,9 +194,6 @@ set showmode         " shows what mode you are in.  Useful for block cmds.
 set ruler            " This shows the current position at lower left.
 set laststatus=2
 
-" set statusline=%F%m%r%h\ %y\ \ %=%(%l\/%L%)\ %c
-" set statusline+=\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " statline.vim stuff
 " disable syntastic on the statusline
@@ -377,28 +319,23 @@ nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Line number stuff
 
-" Toggle between normal and relative line numbering
-function ToggleNumberStyle()
-  if &number
-    set relativenumber
-  else
-    set number
-  endif
-endf
+set number  " Show line numbers
+if exists('+relativenumber')
+  set relativenumber
+endif
 
 " Toggle between absolute and relative line numbers
-nnoremap <silent> <Leader>ln :call ToggleNumberStyle()<cr>
+nnoremap <silent> <Leader>ln :set relativenumber!<cr>
+
 " Remove trailing whitespace
 nnoremap <silent> <Leader>ls :FixWhitespace<cr>
+
 " Toggle line wrapping
 nnoremap <silent> <Leader>lw :set wrap!<cr>
+
 " Insert a horizontal rule
 nnoremap <silent> <Leader>lh 080i#<esc>
 nnoremap <silent> <Leader>lH 080i-<esc>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" openurl.vim bindings
-nnoremap <silent> <Leader>ou :OpenUrlInBrowser<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make bindings
@@ -463,7 +400,6 @@ command! -nargs=+ -complete=command Pipe call PipeToBuffer(<q-args>)
 map <Leader>b :Sscratch<CR>
 vmap <Leader>b y:Sscratch<CR>Gp
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " screen.vim bindings
 " Send current file or visual selection to screen
@@ -488,19 +424,17 @@ let g:Gitv_DoNotMapCtrlKey = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " hg bindings
-command -nargs=* H !hg <args>
-command -nargs=* Hstatus !hg status <args>
-command -nargs=* Hcommit !hg commit <args>
-command -nargs=* Hadd    !hg add <args>
-command -nargs=* Hpull   !hg pull <args>
-command -nargs=* Hpush   !hg push <args>
-command -nargs=* Hlog    !hg log <args>
+command -nargs=* Hg !hg <args>
+command -nargs=* Hgstatus !hg status <args>
+command -nargs=* Hgcommit !hg commit <args>
+command -nargs=* Hgadd    !hg add <args>
+command -nargs=* Hgpull   !hg pull <args>
+command -nargs=* Hgpush   !hg push <args>
+command -nargs=* Hglog    !hg log <args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " p4 bindings
 command -nargs=* P4 !p4 <args>
-nmap <silent> <leader>ra :P4 add %<cr>
-nmap <silent> <leader>re :P4 edit %<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fuzzy finder bindings
@@ -562,10 +496,6 @@ let g:leiningen_no_auto_repl = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic stuff
 
-" syntastic doesn't know about my c setup so tell it to shutup.
-"let g:syntastic_mode_map = { 'mode': 'active',
-"                            \ 'active_filetypes': [],
-"                            \ 'passive_filetypes': ['c', 'cpp', 'html'] }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " haskell stuff
