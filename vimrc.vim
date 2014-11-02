@@ -517,6 +517,5 @@ let g:haskell_indent_in = 1
 " misc
 
 " Load other files
-runtime filetypes.vim
 runtime subs.vim
 
