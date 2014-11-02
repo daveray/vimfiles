@@ -80,6 +80,8 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
+runtime! macros/matchit.vim
+
 " Default to UTF-8
 set encoding=utf-8
 
