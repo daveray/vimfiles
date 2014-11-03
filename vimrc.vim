@@ -140,42 +140,12 @@ vnoremap > >gv
 vmap <tab> >gv
 vmap <s-tab> <gv
 
-" Make command line act like it has readline bindings
-cnoremap <C-a>  <Home>
-cnoremap <C-b>  <Left>
-cnoremap <C-e>  <End>
-cnoremap <C-f>  <Right>
-cnoremap <C-d>  <Delete>
-cnoremap <M-b>  <S-Left>
-cnoremap <M-f>  <S-Right>
-cnoremap <M-d>  <S-right><Delete>
-cnoremap <Esc>b <S-Left>
-cnoremap <Esc>f <S-Right>
-cnoremap <Esc>d <S-right><Delete>
-cnoremap <C-g>  <C-c>
-"
 " In the command-line ctrl-j and ctrl-k go up/down. Slightly different from
 " ctrl-p and ctrl-n since it takes what's already been typed into account.
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 
 inoremap <C-U> <C-G>u<C-U>
-
-" Make insert mode act like it has readline bindings
-" I know some of these things have other meanings, but it's just too much to
-" remember.
-inoremap <C-a>  <Home>
-inoremap <C-b>  <Left>
-inoremap <C-e>  <End>
-inoremap <C-f>  <Right>
-inoremap <C-d>  <Delete>
-inoremap <M-b>  <S-Left>
-inoremap <M-f>  <S-Right>
-inoremap <M-d>  <S-right><Delete>
-inoremap <Esc>b <S-Left>
-inoremap <Esc>f <S-Right>
-inoremap <Esc>d <S-right><Delete>
-inoremap <C-g>  <C-c>
 
 " Swap ` and ' for jumping to a mark.
 nnoremap ' `

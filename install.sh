@@ -25,6 +25,7 @@ get millermedeiros  vim-statline             # c39ee7c
 get scrooloose      nerdtree
 get scrooloose      syntastic
 get kien            rainbow_parentheses.vim  # 20130102
+get tpope           vim-rsi # readline/emacs bindings
 get tpope           vim-surround             # 489a1e8
 get tpope           vim-unimpaired           # e801372
 get tpope           vim-fugitive             # 34e2d25
