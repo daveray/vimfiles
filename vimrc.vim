@@ -378,6 +378,7 @@ vmap <Leader>b y:Sscratch<CR>Gp
 " Send current file or visual selection to screen
 nmap <silent> <Leader>ss :ScreenSend<cr>
 vmap <silent> <Leader>ss :ScreenSend<cr>
+let g:ScreenImpl='GnuScreen'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git bindings
