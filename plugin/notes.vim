@@ -86,3 +86,16 @@ endfunction
 " Move forward back through logs
 nmap <silent> <Leader>n- :execute NextLog(-1) <cr>
 nmap <silent> <Leader>n= :execute NextLog(1) <cr>
+
+function! NotesSummary(args)
+  new
+  silent execute "r !notes summary " . a:args
+  execute "normal! gg"
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal nomodified
+  setlocal ro
+  silent execute "file! " . a:args
+endfunction
+
+command! -nargs=+ NotesSummary call NotesSummary(<q-args>)
