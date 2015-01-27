@@ -21,6 +21,9 @@ function! EditLog(offset)
     execute "edit ~/.notes/log/" . GetLogDate(a:offset) . ".txt"
 endfunction
 
+" Hack to mark notes TODO as done.
+nmap <silent> <Leader>nD dd<esc>/DONE<cr>PRDONE<esc>A - <esc><Leader>nt<esc>0
+
 " Open logs going back 10 days
 nmap <silent> <Leader>n0 :execute EditLog(0) <cr>
 nmap <silent> <Leader>n1 :execute EditLog(-1) <cr>
