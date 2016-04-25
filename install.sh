@@ -6,7 +6,7 @@ function get {
   dir="git-$2"
   if [ -d $dir ]; then
     echo "Updating $1 $2"
-    git -C $dir pull
+    #git -C $dir pull
   else
     echo "Cloning $1 $2"
     git clone git@github.com:$1/$2.git $dir
@@ -29,8 +29,14 @@ get tpope           vim-rsi # readline/emacs bindings
 get tpope           vim-surround             # 489a1e8
 get tpope           vim-unimpaired           # e801372
 get tpope           vim-fugitive             # 34e2d25
-get tpope           vim-projectionist        # 97fde2dbe91e86b4b3fb3b9714dce6fe23a0cc25
 get gregsexton      gitv                     # gitv-be6d7db
+get tpope           vim-projectionist        # 97fde2dbe91e86b4b3fb3b9714dce6fe23a0cc25
+
+get tpope           vim-speeddating
+
+get jceb            vim-orgmode
+get vim-scripts     SyntaxRange
+
 get eagletmt        ghcmod-vim
 get raichoo         haskell-vim
 get bitc            vim-hdevtools
