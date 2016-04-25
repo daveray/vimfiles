@@ -70,6 +70,9 @@ nmap <silent> <Leader>nt a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 " Insert inline timestamp
 nmap <silent> <Leader>nT i<C-R>=strftime("[%Y-%m-%d %a %I:%M %p]")
 
+" Insert reference to today's log
+nmap <silent> <Leader>nF i(~/.notes/log/<C-R>=GetLogDate(0)<CR>.txt)
+
 function! AdjustDate(date, offset)
 python << EOF
 import vim
