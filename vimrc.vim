@@ -488,6 +488,10 @@ let g:haskell_indent_do = 3
 let g:haskell_indent_in = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Markdown
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " misc
 
 " Load other files
