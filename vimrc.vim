@@ -284,7 +284,7 @@ nmap <C-p> :bprevious<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree config
-let NERDTreeIgnore=['^\.gradle$[[dir]]', '^classes$[[dir]]', '^target$[[dir]]', '^bin$[[dir]]', '^build$[[dir]]', '\.pyc$', '\~$']
+let NERDTreeIgnore=['^\.gradle$[[dir]]', '^classes$[[dir]]', '^target$[[dir]]', '^bin$[[dir]]', '^build$[[dir]]', '\.pyc$', '\~$', '^__pycache__$[[dir]]']
 
 " Toggle nerd tree
 nnoremap <silent> <Leader>t :NERDTreeToggle<cr>
