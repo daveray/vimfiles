@@ -43,7 +43,5 @@ get bitc            vim-hdevtools
 get tpope           vim-dispatch             # 2d202d5de2dda74fd6d8d340201d0460dfea6f14
 get guns            vim-clojure-highlight    # aac76b431b1ed726a7f3e2608bdfc02cce76ec8e
 get guns            vim-clojure-static       # d978de518c1f4eae68f976f9b016d0767880dc27
-get tpope           vim-leiningen            # c165108680d83adcd53f7ee1dbf8ef14f7111255
-get daveray         vim-fireplace
 get derekwyatt      vim-scala
 get Shougo          vimproc.vim              &&  make -C git-vimproc.vim  #  3e055023dfab4f5a4dfa05a834f9d0cb7294a82e
