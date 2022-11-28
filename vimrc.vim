@@ -26,7 +26,7 @@ set path+=src,test,resources
 "set t_Co=256
 
 " Load plugins from .vim/bundles using .vim/autoload/pathogen.vim
-call pathogen#infect()
+execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
@@ -382,7 +382,7 @@ let g:ScreenImpl='GnuScreen'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git bindings
-nmap <silent> <leader>gs :Gstatus<cr>
+nmap <silent> <leader>gs :Git<cr>
 nmap <silent> <leader>ge :Gedit<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gP :Git push<cr>

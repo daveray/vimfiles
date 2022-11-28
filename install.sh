@@ -6,7 +6,7 @@ function get {
   dir="git-$2"
   if [ -d $dir ]; then
     echo "Updating $1 $2"
-    #git -C $dir pull
+    git -C $dir pull
   else
     echo "Cloning $1 $2"
     git clone git@github.com:$1/$2.git $dir
@@ -29,19 +29,19 @@ get tpope           vim-rsi # readline/emacs bindings
 get tpope           vim-surround             # 489a1e8
 get tpope           vim-unimpaired           # e801372
 get tpope           vim-fugitive             # 34e2d25
-get gregsexton      gitv                     # gitv-be6d7db
+#get gregsexton      gitv                     # gitv-be6d7db
 get tpope           vim-projectionist        # 97fde2dbe91e86b4b3fb3b9714dce6fe23a0cc25
 
 get tpope           vim-speeddating
 
-get jceb            vim-orgmode
 get vim-scripts     SyntaxRange
 
-get eagletmt        ghcmod-vim
-get raichoo         haskell-vim
-get bitc            vim-hdevtools
+#get jceb            vim-orgmode
+#get eagletmt        ghcmod-vim
+#get raichoo         haskell-vim
+#get bitc            vim-hdevtools
 get tpope           vim-dispatch             # 2d202d5de2dda74fd6d8d340201d0460dfea6f14
-get guns            vim-clojure-highlight    # aac76b431b1ed726a7f3e2608bdfc02cce76ec8e
-get guns            vim-clojure-static       # d978de518c1f4eae68f976f9b016d0767880dc27
-get derekwyatt      vim-scala
+#get guns            vim-clojure-highlight    # aac76b431b1ed726a7f3e2608bdfc02cce76ec8e
+#get guns            vim-clojure-static       # d978de518c1f4eae68f976f9b016d0767880dc27
+#get derekwyatt      vim-scala
 get Shougo          vimproc.vim              &&  make -C git-vimproc.vim  #  3e055023dfab4f5a4dfa05a834f9d0cb7294a82e
